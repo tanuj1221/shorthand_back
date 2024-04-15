@@ -95,8 +95,8 @@ exports.getStudentSubjects = async (req, res) => {
       const rawSubjectsId = subjects[0][0].subjectsId;
       const parsedSubjectsId = JSON.parse(rawSubjectsId);  // Now should be an array, e.g., [101]
 
-      // Fetch details from subjectsdb table
-      const subjectsDetailsQuery = 'SELECT * FROM subjectsdb WHERE subjectId IN (?)';
+      // Fetch details from subjectsDb table
+      const subjectsDetailsQuery = 'SELECT * FROM subjectsDb WHERE subjectId IN (?)';
       const subjectDetails = await connection.query(subjectsDetailsQuery, [parsedSubjectsId]);
 
       if (subjectDetails.length > 0) {
@@ -151,7 +151,7 @@ exports.getStudentSubjectInfo = async (req, res) => {
         s.subjectsId,
         '$[*]' COLUMNS(subjectId CHAR(50) COLLATE utf8mb4_unicode_ci PATH '$')  -- Specifying collation here
       ) AS subjects ON s.student_id = ?
-      JOIN subjectsdb AS sub ON subjects.subjectId COLLATE utf8mb4_unicode_ci = sub.subjectId COLLATE utf8mb4_unicode_ci  -- Matching collations for safe comparison
+      JOIN subjectsDb AS sub ON subjects.subjectId COLLATE utf8mb4_unicode_ci = sub.subjectId COLLATE utf8mb4_unicode_ci  -- Matching collations for safe comparison
     `;
 
     const studentSubjects = await connection.query(studentSubjectsQuery, [userId]);

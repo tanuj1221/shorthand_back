@@ -1,0 +1,58 @@
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two columns */
+  grid-gap: 20px; /* space between grid items */
+  max-width: 800px; /* max width of the form */
+  margin: auto; /* center the form on the page */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column; /* stack label and input vertically */
+}
+
+.form-group label {
+  margin-bottom: 5px; /* space between label and input */
+}
+
+input[type='text'],
+input[type='email'],
+select,
+input[type='file'] {
+  padding: 10px;
+  margin-bottom: 10px; /* space between input and next group */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type='checkbox'] {
+  margin-right: 5px;
+}
+
+button[type='submit'] {
+  padding: 10px 20px;
+  background-color: #0044cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type='submit']:hover {
+  background-color: #003399;
+}
+
+.subjects-group {
+  grid-column: 1 / -1; /* span across all columns */
+}
+
+.subjects-group div {
+  display: flex;
+  align-items: center;
+}
+
+img {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 10px;
+}

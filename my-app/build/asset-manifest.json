@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8bcf6f63.css",
+    "main.js": "/static/js/main.e245ea11.js",
+    "static/js/453.ed3810f9.chunk.js": "/static/js/453.ed3810f9.chunk.js",
+    "static/media/GCC-TBC.png": "/static/media/GCC-TBC.03c96dff2889800d9229.png",
+    "index.html": "/index.html",
+    "main.8bcf6f63.css.map": "/static/css/main.8bcf6f63.css.map",
+    "main.e245ea11.js.map": "/static/js/main.e245ea11.js.map",
+    "453.ed3810f9.chunk.js.map": "/static/js/453.ed3810f9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8bcf6f63.css",
+    "static/js/main.e245ea11.js"
+  ]
+}

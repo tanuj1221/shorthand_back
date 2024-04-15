@@ -1,0 +1,316 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+.title-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef, #dee2e6);
+  color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #6c757d;
+  gap: 10px;
+
+}
+
+.info-title img {
+  width: 100px;  /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+}
+
+.title-bar h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 2em;
+  position: relative;
+}
+
+.title-bar h1::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 1px;
+  background-color: #6c757d;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  background: linear-gradient(to bottom, #bdc3c7 0%, #ecf0f1 100%);
+  border: 1px solid #bdc3c7;
+  border-radius: 10px;
+}
+
+/* Body end============================================== */
+
+/* Exam Time Container=================================== */
+
+.information {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+  width: 30rem;
+  background-color: #34495e;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  color: white;
+  border-bottom: 3px solid rgb(14, 223, 14);
+  font-size: 2rem;
+}
+
+.exam-date,
+.start-time {
+  font-family: 'Roboto', sans-serif;
+  color: black;
+  font-size: 0.8rem;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.exam-hours {
+  display: flex;
+  justify-content: center; /* Center the items horizontally */
+  width: 100%; /* Adjust as needed */
+}
+  
+  /* Exam Time Container end=================================== */
+
+  /* Info Container end=================================== */
+
+  .info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 29rem;
+    margin: 10px;
+    padding: 20px;
+    background-color: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    border-radius: 10px;
+  }
+  
+  .info-left, .info-right {
+    background-color: #bdc3c7;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    flex: 1;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+
+  
+  .small-text-field {
+    background-color: #f6f6f6;
+    color: #34495e;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin: 10px 0;
+    width: 30%; /* You can adjust this value if you want the text field to be smaller or larger */
+  }
+  
+  .password-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .password-container span {
+    margin-right: 10px; /* Adjust this value to create the desired gap */
+  }
+  /* Info Container end=================================== */
+
+  /* Info Container end=================================== */
+
+  /* Button Container=================================== */
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem; /* Adjust as needed */
+    margin-bottom: 1rem;
+}
+
+/* Proceed button */
+
+.proceed-button {
+    padding: 10px 20px; /* Adjust as needed */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em; /* Adjust as needed */
+    background-color: #34495e; /* Adjust as needed */
+    color: #ffffff; /* Adjust as needed */
+    border: none;
+    border-radius: 5px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+.proceed-button:hover {
+  background-color: #2c3e50; /* Darker shade of button's original color */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+/* Logout button */
+
+  .logout-button {
+    padding: 10px 20px; /* Adjust as needed */
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em; /* Adjust as needed */
+    background-color: #e74c3c; /* Red color */
+    color: #ffffff; /* White text color */
+    border: none;
+    border-radius: 5px; /* Adjust as needed */
+    cursor: pointer;
+  }
+
+  .logout-button:hover {
+  background-color: #c0392b; /* Darker shade of button's original color */
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+
+/* Checkbox Styling ================================ */
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.checkbox-container input[type='checkbox'] {
+  display: none;
+}
+
+.checkbox-container label {
+  position: relative;
+  padding-left: 25px; /* Adjusted to fit smaller box */
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  color: #34495e;
+  font-size: 0.9em;
+}
+
+.checkbox-container label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 12px;  /* Reduced from 24px */
+  height: 12px; /* Reduced from 24px */
+  border: 2px solid #34495e;
+  border-radius: 3px; /* Reduced to maintain the aspect ratio */
+  background-color: #ecf0f1;
+}
+
+.checkbox-container input[type='checkbox']:checked + label::after {
+  content: '';
+  position: absolute;
+  left: 3px; /* Adjusted to match the new box size */
+  top: 1px;  /* Adjusted to match the new box size */
+  width: 6px;  /* Reduced from 10px */
+  height: 9px; /* Reduced from 14px */
+  border: solid #34495e;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+/* Checkbox Styling ================================ */
+
+/* Button Container end=================================== */
+
+  /* Responsive Code */
+  @media (max-width: 470px) {
+    .title-bar{
+      height: 100px;
+    }
+    .title-bar h1 {
+      font-size: 1.2em;
+    }
+    .info-title img {
+      width: 100px;  /* Adjust as needed */
+      height: 100px; /* Adjust as needed */
+    }
+    .container{
+      width: 80vw;
+    }
+    .information{
+      width: 65vw;
+      font-size: 1rem;
+    }
+    .information .exam-date,
+    .information .start-time,
+    .information .end-time {
+        font-size: 0.7rem; /* Adjust this to the size you want */
+    }
+    .student-info{
+      width: 65vw;
+    }
+    .student-name{
+      font-size: 0.8em;
+    }
+    .student-details{
+      margin-left: 0;
+    }
+    .info-container {
+      width: 65vw;
+      font-size: 0.5em; /* Adjust this to the size you want */
+    }
+    .info-container p{
+      font-size: 0.9em; /* Adjust this to the size you want */
+    }
+    .info-left, .info-right {
+      font-size: 0.7rem;
+    }
+    .proceed-button {
+      font-size: 0.6em; /* Adjust this to the size you want */
+    }
+
+    .checkbox-container label {
+      font-size: 0.6em;
+  }
+  }
+
+
+  /* Responsive Code end==============================*/
+
+  /* Copyrights */
+
+  .copyright {
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+

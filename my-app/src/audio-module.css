@@ -1,0 +1,342 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  /* padding-top: 120px; height of the title bar */
+  box-sizing: border-box;
+}
+#audio{
+  display: none;
+}
+
+.title-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef, #dee2e6);
+  color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid #6c757d;
+  gap: 10px;
+}
+
+.title-bar h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 2em;
+  position: relative;
+}
+
+.title-bar h1::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 1px;
+  background-color: #6c757d;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  margin-top: 140px; /* Add margin-top equal to the height of the title bar */
+  background: linear-gradient(to bottom, #bdc3c7 0%, #ecf0f1 100%);
+  border: 1px solid #bdc3c7;
+  border-radius: 10px;
+}
+
+
+/* Body end============================================== */
+
+/* Student Information=================================== */
+
+.student-info {
+  align-items: center;
+  justify-content: flex-start;
+  margin: 20px;
+  background-color: #ecf0f1;
+  border-radius: 20px;
+  padding: 10px;
+  width: 25rem;
+}
+
+.student-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+}
+
+.student-name {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
+  color: #555;
+}
+
+/* Student Information end================================ */
+
+/* Instruction Container================================== */
+
+
+.instruction {
+  background-color: #ecf0f1; /* Same as `student-info` container */
+  border-radius: 20px; /* Same as `student-info` container */
+  padding: 10px; /* Same as `student-info` container */
+  margin: 20px; /* Same as `student-info` container */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  width: 25rem; /* Same as `student-info` container */
+  text-align: center; /* Center the text */
+}
+
+.instruction p {
+  font-family: 'Roboto', sans-serif;
+  color: red; /* Text color set to red */
+  font-size: 1em;
+
+}
+/* Instruction Container end================================== */
+
+/* Audio Player=================================== */
+.audio-player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  padding: 10px;
+  width: 25rem;
+  background-color: #ecf0f1;
+  border-radius: 10px;
+  border: 2px solid #bdc3c7;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#play-pause {
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  cursor: pointer;
+}
+
+.audio-progress {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+#progress-bar {
+  flex-grow: 1;
+  height: 10px;
+  appearance: none;
+  border: none;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #bdc3c7;
+}
+
+#progress-bar::-webkit-progress-bar {
+  background-color: #bdc3c7;
+}
+
+#progress-bar::-webkit-progress-value {
+  background-color: #3498db;
+}
+
+#progress-bar::-moz-progress-bar {
+  background-color: #3498db;
+}
+
+#percentage {
+  margin-left: 10px;
+}
+
+#visualizer {
+  max-width: 100%;
+  height: 4rem;
+  width: 15rem;
+  
+}
+/* Audio Player end================================ */
+
+/* Overlay code ===================================*/
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.countdown {
+  font-size: 2em;
+  color: white;
+}
+/* Overlay code ===================================*/
+
+/* Yes and No buttons ============================*/
+.message-box {
+  background-color: #ecf0f1; /* Same as `student-info` container */
+  border-radius: 20px; /* Same as `student-info` container */
+  padding: 20px; /* Add some padding to give some space inside the container */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+  width: 90%; /* Adjust to your needs */
+  text-align: center; /* Center the text */
+  margin: auto; /* Center the box */
+  margin-top: 0.8rem;
+  margin-left: 0.8rem;
+  margin-right: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.message-box p {
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50; /* Text color */
+  font-size: 0.8em;
+  margin-bottom: 1em;
+}
+
+.message-box-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+}
+
+.message-box-options button {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1em;
+}
+
+.message-box-options .yes-button {
+  background-color: #27ae60;
+}
+
+.message-box-options .no-button {
+  background-color: #c0392b;
+}
+
+.message-box-options .yes-button:hover {
+  background-color: #2ecc71;
+}
+
+.message-box-options .no-button:hover {
+  background-color: #e74c3c;
+}
+
+
+
+/* Yes and No buttons end ============================*/
+
+/* Responsive code =================================*/
+
+@media (max-width: 470px) {
+  .container{
+    width: 80vw;
+  }
+  
+  .student-info{
+    width: 65vw;
+  }
+  
+  .student-details {
+    margin-left: 0rem;
+  }
+
+  .student-name {
+    font-size: 0.9em;
+  }
+
+  #percentage{
+    font-size: 0.5em;
+  }
+  
+  .instruction{
+    width: 65vw;
+  }
+  
+  .audio-player {
+    width: 65vw;
+  }
+
+  .message-box-options button {
+    /* Decrease size of buttons a bit */
+    font-size: 0.8em;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 360px) {
+
+  .container{
+    width: 88vw; /* reduced from 90vw */
+  }
+  
+  .student-info{
+    width: 73vw; /* reduced from 75vw */
+  }
+  
+  .student-details {
+    margin-left: 0rem;
+  }
+  
+  .student-name {
+    font-size: 0.9em;
+  }
+  
+  #percentage{
+    font-size: 0.5em;
+  }
+  
+  .instruction{
+    width: 73vw; /* reduced from 75vw */
+  }
+  
+  .audio-player {
+    width: 78vw; /* reduced from 80vw */
+  }
+
+  .message-box-options button {
+    /* Decrease size of buttons a bit more */
+    font-size: 0.7em;
+    padding: 6px 12px;
+  } 
+}
+
+

@@ -1,0 +1,56 @@
+/* PaymentModal.css */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f7f7f7; /* Light grey background for the modal */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Slightly darker shadow for depth */
+    width: 400px;
+    text-align: center;
+    z-index: 1000;
+    border: 1px solid #e1e1e1; /* subtle border */
+}
+
+.modal h2 {
+    color: #333; /* Dark grey color for the heading */
+    margin-bottom: 30px; /* More space below the heading */
+}
+
+.input {
+    display: block;
+    width: calc(100% - 20px); /* Accounting for padding */
+    padding: 10px;
+    margin-bottom: 20px; /* Consistent margin for all inputs */
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Light grey border for inputs */
+    border-radius: 4px;
+    font-size: 16px; /* Larger font size for better readability */
+}
+
+.button {
+    width: calc(50% - 10px);
+    padding: 10px 0; /* Padding top and bottom for a taller button */
+    margin: 5px; /* Small margin to separate buttons */
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px; /* Matching font size with input fields */
+    font-weight: bold; /* Bold font for button text */
+    background-color: #5cb85c; /* Green color for the primary action */
+    color: white; /* White text for better contrast */
+}
+
+.button.cancel {
+    background-color: #d9534f; /* Red color for cancellation or dangerous actions */
+}
+
+.button:not(.cancel):hover {
+    background-color: #4cae4c; /* Slightly darker green for hover state */
+}
+
+.button.cancel:hover {
+    background-color: #c9302c; /* Slightly darker red for hover state */
+}

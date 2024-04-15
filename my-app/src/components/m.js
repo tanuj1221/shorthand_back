@@ -22,7 +22,7 @@ function StudentForm() {
     // Fetch Batch Years
     useEffect(() => {
         const fetchBatchInfo = async () => {
-            const result = await axios('http://localhost:3000/batch');
+            const result = await axios('http://localhost:3001/batch');
             setBatchYears(result.data.map(batch => batch.batch_year));
         };
         fetchBatchInfo();
@@ -31,7 +31,7 @@ function StudentForm() {
     // Fetch Semesters for a given Batch Year
     useEffect(() => {
         const fetchSemesters = async () => {
-            const result = await axios(`http://localhost:3000/batch?batch_year=${selectedYear}`);
+            const result = await axios(`http://localhost:3001/batch?batch_year=${selectedYear}`);
             setSemesters(result.data);
         };
         if (selectedYear) fetchSemesters();
@@ -40,7 +40,7 @@ function StudentForm() {
     // Fetch Subjects
     useEffect(() => {
         const fetchSubjects = async () => {
-            const result = await axios('http://localhost:3000/subjectsAndIds');
+            const result = await axios('http://localhost:3001/subjectsAndIds');
             setSubjects(result.data);
         };
         fetchSubjects();
@@ -78,7 +78,7 @@ function StudentForm() {
         };
 
         try {
-            await axios.post('http://localhost:3000/registerstudent', newStudent);
+            await axios.post('http://localhost:3001/registerstudent', newStudent);
             alert('Student created successfully!');
         } catch (error) {
             alert('Failed to create student');

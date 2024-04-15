@@ -1,32 +1,341 @@
-.student-list-container {
-    margin: 20px;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.student-table {
+/* Base styles */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+  }
+  
+  .student-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-}
-
-.student-table th, .student-table td {
+  }
+  
+  .student-table th, .student-table td {
     text-align: left;
     padding: 8px;
     border: 1px solid #ddd;
-}
-
-.student-table th {
+  }
+  
+  .student-table th {
     background-color: #007bff;
     color: white;
-}
-
-.student-table tr:nth-child(even) {
+  }
+  
+  .student-table tr:nth-child(even) {
     background-color: #f2f2f2;
+  }
+  
+  .student-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .student-table img {
+    max-width: 100px; /* Default max width for images */
+    max-height: 100px; /* Default max height for images */
+  }
+  
+  .student-table img.student-image {
+    width: 100%;  /* Allows the image to scale with the containing cell */
+    max-width: 100px;  /* Default max width */
+    height: auto;  /* Maintains aspect ratio */
+  }
+
+  /* Base styles */
+  .heading {
+    text-align: center; /* Centers the text */
+    color: #333; /* A modern, neutral color */
+    font-size: 2rem; /* A larger font size for the main heading */
+    font-weight: 300; /* A lighter font weight for a modern look */
+    text-transform: uppercase; /* Uppercase text for stylistic preference */
+    letter-spacing: 1px; /* Spacing out letters a bit for readability */
+    margin-bottom: 1rem; /* Adding some space below the heading */
+    padding-top: 20px; /* Padding at the top to push the content down a bit */
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 200px;
+    height: 40px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+    margin-bottom: 10px;
+  }
+  
+  .student-list-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+    margin: 20px 0 0px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+  }
+  
+  .student-list-container button:hover {
+    background-color: #0056b3;
+  }
+
+/* ============================================================== */
+.warning{
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.student-table tr:hover {
-    background-color: #ddd;
+.student-list-container .deleteButton{
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #dc3545; /* Bootstrap's red color for danger actions */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: opacity 0.3s ease;
 }
+
+.student-list-container .deleteButton:hover {
+  opacity: 0.8;
+}
+
+
+/* Custom checkbox styles */
+.custom-checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    margin: 0;
+    font: inherit;
+    color: currentColor;
+    width: 1em;
+    height: 1em;
+    border: 0.5px solid #000000;
+    border-radius: 0.25em;
+    transform: translateY(-0.1em);
+    display: grid;
+    place-content: center;
+  }
+  
+  /* Style for when the checkbox is checked */
+  .custom-checkbox:checked {
+    background-color: green;
+    border-color: green;
+    /* You can use an SVG for the check mark or a Unicode character */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 111.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+    /* Media query for screens smaller than 1224px */
+    @media (max-width: 1224px) {
+        .student-table th, .student-table td {
+          padding: 5px;
+          font-size: 12px;
+        }
+      
+        .student-table {
+          font-size: 14px;
+        }
+      
+        .table-responsive {
+          margin-top: 10px;
+        }
+      
+        .student-table img {
+          max-width: 80px;
+          max-height: 80px;
+        }
+    
+        .student-table img.student-image {
+            max-width: 80px;
+          }
+    
+          .heading {
+            font-size: 1.8rem;
+            padding-top: 15px;
+          }
+        
+          .search-input {
+            max-width: 180px;
+            font-size: 15px;
+            height: 30px;
+          }
+        
+          .student-list-container .button {
+            font-size: 9px;
+            padding: 10px 20px;
+
+          }
+
+          .student-list-container .deleteButton{
+            font-size: 12px;
+          }
+
+          .warning{
+            font-size: 10px;
+          }
+
+          
+      }
+      
+      /* Media query for screens smaller than 924px */
+      @media (max-width: 924px) {
+        .student-table th, .student-table td {
+          padding: 2px;
+          font-size: 7px;
+        }
+      
+        .student-table {
+          font-size: 8px;
+        }
+      
+        .table-responsive {
+          margin-top: 3px;
+        }
+      
+        .student-table img {
+          max-width: 60px;
+          max-height: 60px;
+        }
+    
+        .student-table img.student-image {
+            max-width: 60px;
+          }
+    
+          .heading {
+            font-size: 1.6rem;
+            padding-top: 10px;
+          }
+        
+          .search-input {
+            max-width: 160px;
+            font-size: 14px;
+            height: 22px;
+          }
+        
+          .student-list-container .button {
+            font-size: 8px;
+            padding: 9px 17px;
+
+          }
+          .student-list-container .deleteButton{
+            font-size: 7px;
+          }
+
+          .warning{
+            font-size: 8px;
+          }
+      }
+      
+      /* Media query for screens smaller than 768px */
+      @media (max-width: 768px) {
+        .student-table th, .student-table td {
+          padding: 1px;
+          font-size: 6px;
+        }
+      
+        .student-table {
+          font-size: 7px;
+        }
+      
+        .table-responsive {
+          margin-top: 1px;
+        }
+      
+        .student-table img {
+          max-width: 40px;
+          max-height: 40px;
+        }
+    
+        .student-table img.student-image {
+            max-width: 40px;
+          }
+        
+          .heading {
+            font-size: 1.4rem;
+            padding-top: 5px;
+          }
+        
+          .search-input {
+            max-width: 140px;
+            font-size: 13px;
+            height: 15px;
+          }
+        
+          .student-list-container .button {
+            font-size: 7px;
+            padding: 7px 15px;
+          }
+          .student-list-container .deleteButton{
+            font-size: 7px;
+            padding: 4px 10px;
+          }
+
+
+      }
+      
+      /* Media query for screens smaller than 478px */
+      @media (max-width: 478px) {
+        .student-table th, .student-table td {
+          padding: 0.3px;
+          font-size: 4px;
+        }
+      
+        .student-table {
+          font-size: 5px;
+        }
+      
+        .table-responsive {
+          margin-top: 0;
+        }
+      
+        .student-table img {
+          max-width: 30px; /* Significantly smaller image size for very small screens */
+          max-height: 30px;
+        }
+    
+        .student-table img.student-image {
+            max-width: 30px;
+          }
+    
+          .heading {
+            font-size: 1.2rem;
+            padding-top: 0px;
+          }
+        
+          .search-input {
+            max-width: 120px;
+            font-size: 12px;
+            height: 10px;
+          }
+        
+          .student-list-container .button {
+            font-size: 6px;
+            padding: 3px 12px;
+
+          }
+
+          .student-list-container .deleteButton{
+            font-size: 6px;
+            padding: 3px 10px;
+          }
+
+          .warning{
+            font-size: 6px;
+          }
+      }
+      

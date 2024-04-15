@@ -72,6 +72,10 @@
   display: flex;
   align-items: center;
 }
+/* Define classes for text size that change with different screen sizes */
+.text-normal {
+  font-size: 0.9rem; /* Default font size */
+}
 
 .navbar .logo img {
   height: var(--navbar-logo-size);
@@ -80,6 +84,158 @@
   border-radius: var(--navbar-border-radius); /* Rounded corners for logo */
 }
 
+.menu-container {
+  display: flex; /* Use flexbox to align children side by side */
+  align-items: center; /* Align items vertically in the center */
+  justify-content: space-between; /* Space out children evenly */
+}
+
+.menu-toggle {
+  display: none; /* Always show toggle button */
+  font-size: 24px; /* Set size of hamburger icon */
+  cursor: pointer; /* Pointer cursor on hover */
+  background: none;
+  border: none;
+  color: var(--navbar-color); /* Use color variable for consistency */
+}
+
+.logout-link {
+  color: var(--link-color); /* Set the color for the link */
+  text-decoration: none; /* No underline */
+  font-size: 16px; /* Font size for logout text */
+  padding: 0 15px; /* Padding to increase tap/click area */
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block; /* Show toggle button on small screens */
+  }
+
+  .navbar .menu-links {
+    display: none; /* Hide menu links by default */
+    flex-direction: column; /* Stack links vertically */
+    width: 100%; /* Full width */
+    position: absolute;
+    background-color: var(--navbar-background);
+    top: var(--navbar-height);
+    left: 0;
+    z-index: 999;
+  }
+
+  .navbar .menu-links.open {
+    display: flex; /* Show menu when 'open' class is added */
+  }
+
+  .navbar .nav-link {
+    text-align: center; /* Center align links */
+    padding: 15px; /* Larger tap targets */
+  }
+}
+
+/* Media query for screens smaller than 1468px */
+@media (max-width: 1468px) {
+  :root {
+    --navbar-height: 80px; /* Smaller navbar height */
+    --navbar-logo-size: 50px; /* Smaller logo size */
+  }
+
+  .navbar {
+    padding: 0 1rem; /* Less padding on the sides */
+  }
+
+  .navbar .nav-link {
+    padding: 0.4rem 0.8rem; /* Smaller padding */
+  }
+
+  .navbar .nav-link a {
+    font-size: 0.9rem; /* Smaller font size for links */
+  }
+
+  .navbar .logo img {
+    margin-right: 5px; /* Smaller margin next to the logo */
+  }
+
+  /* Adjustments for text inside the logo container */
+  .navbar .logo div {
+    font-size: var(--font-size-small); /* Smaller font size for the text next to the logo */
+  }
+
+  .text-normal {
+    font-size: 0.7rem; /* Smaller font size for medium screens */
+  }
+}
+
+/* Media query for screens smaller than 1268px */
+@media (max-width: 1268px) {
+  :root {
+    --navbar-height: 80px; /* Even smaller navbar height */
+    --navbar-logo-size: 40px; /* Further reduced logo size */
+    --font-size-small: 0.7rem; /* Reduce font size even more */
+  }
+
+  .navbar {
+    padding: 0 0.8rem; /* Even less padding on the sides */
+  }
+
+  .navbar .nav-link {
+    padding: 0.3rem 0.6rem; /* Even smaller padding */
+  }
+
+  .navbar .nav-link a {
+    font-size: 0.6rem; /* Smaller font size for links */
+  }
+
+  .navbar .logo img {
+    margin-right: 3px; /* Even smaller margin next to the logo */
+  }
+
+  /* Adjust text styling inside the logo container for smaller screens */
+  .navbar .logo div {
+    font-size: 0.5rem; /* Smaller font size for medium screens */
+  }
+
+  .text-normal {
+    font-size: 0.4rem; /* Smaller font size for medium screens */
+  }
+
+  .text-normal span {
+    font-size: 0.55rem; /* Smaller font size for medium screens */
+  }
+}
+
+/* =================================== */
+
+.institute-div{
+  white-space: 'nowrap';
+  font-size: '0.9rem';
+  display: 'block'; 
+  align-items: 'center'; 
+  font-weight:'bold';
+}
+
+.institute-info {
+  color: #006400; /* Deep green for the institute info */
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+
+/* Add this to your existing CSS */
+.logo span {
+  position: relative;
+  padding-bottom: 3px; /* Adjust space between text and underline */
+}
+
+.logo span::after {
+  content: '';
+  position: absolute;
+  bottom: 0; /* Adjust to align with the bottom of the text */
+  left: 0;
+  width: 100%; /* Full width of the text */
+  height: 2px; /* Height of the underline */
+  background-color: #006400; /* Color of the underline */
+  transition: all 0.3s ease-in-out;
+}
 /* Ensure that any additional specific styling is included to complete the modern look */
 
 /* Dark mode specific styles */

@@ -1,32 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../tabel.css';
-import PaymentModal from './PaymentModal'
+import PaymentModal from './PaymentModal';
+import { useNavigate } from 'react-router-dom';
+
 const PayStudentList = () => {
     const [students, setStudents] = useState([]);
     const [selectedStudents, setSelectedStudents] = useState(new Set());
+    const [selectAll, setSelectAll] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [userInfo, setUserInfo] = useState({
         name: '',
         email: '',
         contact: ''
     });
+    const navigate = useNavigate();
 
+    const [isNarrowScreen, setIsNarrowScreen] = useState(window.innerWidth < 768);
 
-
-
-
-
+    const updateMedia = () => {
+      setIsNarrowScreen(window.innerWidth < 768);
+    };
+  
+    useEffect(() => {
+      window.addEventListener('resize', updateMedia);
+      return () => window.removeEventListener('resize', updateMedia);
+    });
 
     // Function to fetch students from the backend
     const fetchStudents = async () => {
         try {
-            const response = await axios.get('http://3.110.77.175:3000/paystudents');
+            const response = await axios.get('http://localhost:3000/paystudents');
             setStudents(response.data);
         } catch (error) {
             console.error('Failed to fetch students:', error);
         }
     };
+
+    
 
     // Initial fetch on component mount
     useEffect(() => {
@@ -47,6 +58,16 @@ const PayStudentList = () => {
         });
     };
 
+    const handleSelectAll = (checked) => {
+        setSelectAll(checked);
+        if (checked) {
+            const allStudentIds = new Set(students.map(student => student.student_id));
+            setSelectedStudents(allStudentIds);
+        } else {
+            setSelectedStudents(new Set());
+        }
+    };
+
     const loadScript = (src) => {
         return new Promise((resolve) => {
             const script = document.createElement('script');
@@ -62,18 +83,18 @@ const PayStudentList = () => {
     };
     const renderImage = (imageText) => {
         if (imageText) {
-            const imageBytes = atob(imageText);
-            const arrayBuffer = new ArrayBuffer(imageBytes.length);
-            const uint8Array = new Uint8Array(arrayBuffer);
-            for (let i = 0; i < imageBytes.length; i++) {
-                uint8Array[i] = imageBytes.charCodeAt(i);
-            }
-            const blob = new Blob([uint8Array], { type: 'image/jpeg' });
-            const imageUrl = URL.createObjectURL(blob);
-            return <img src={imageUrl} alt="Student" style={{ maxWidth: '100px', maxHeight: '100px' }} />;
+          const imageBytes = atob(imageText);
+          const arrayBuffer = new ArrayBuffer(imageBytes.length);
+          const uint8Array = new Uint8Array(arrayBuffer);
+          for (let i = 0; i < imageBytes.length; i++) {
+            uint8Array[i] = imageBytes.charCodeAt(i);
+          }
+          const blob = new Blob([uint8Array], { type: 'image/jpeg' });
+          const imageUrl = URL.createObjectURL(blob);
+          return <img src={imageUrl} alt="Student" className="student-image" />;
         }
         return null;
-    };
+      };
     const handlePaymentInitiation = () => {
         setShowModal(true);
     };
@@ -84,7 +105,7 @@ const PayStudentList = () => {
         let order; // To store order details
 
         try {
-            const orderResponse = await axios.post('http://3.110.77.175:3000/createOrder', { amount });
+            const orderResponse = await axios.post('http://localhost:3000/createOrder', { amount });
             order = orderResponse.data; // Store order data
 
             if (!window.Razorpay) {
@@ -105,7 +126,7 @@ const PayStudentList = () => {
                 order_id: order.id,
                 handler: async (response) => {
                     const studentIds = Array.from(selectedStudents);
-                    const verificationResponse = await axios.post('http://3.110.77.175:3000/verifyPayment', {
+                    const verificationResponse = await axios.post('http://localhost:3000/verifyPayment', {
                         razorpay_order_id: order.id,
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
@@ -141,12 +162,16 @@ const PayStudentList = () => {
     };
 
 
+    const handleEditStudent = (studentId) => {
+        // Redirect to the StudentForm with the student's ID
+        navigate(`/dashboard/edit-student/${studentId}`);
+    };
 
     const handleDeleteStudent = async (studentId) => {
         // Confirm before deletion
         if (window.confirm("Are you sure you want to delete this student?")) {
             try {
-                await axios.delete(`http://3.110.77.175:3000/studentsdel/${studentId}`);
+                await axios.delete(`http://localhost:3000/studentsdel/${studentId}`);
                 fetchStudents(); // Refresh the student list after deletion
                 alert('Student deleted successfully');
             } catch (error) {
@@ -160,10 +185,10 @@ const PayStudentList = () => {
     
 
     const buttonStyle = {
-        padding: '12px 24px', // Generous padding for a larger click area
+        padding: isNarrowScreen ? '5px 8px' : '6px 10px', // Generous padding for a larger click area
         border: 'none', // No border for a clean, flat design
         borderRadius: '6px', // Modern rounded corners
-        fontSize: '16px', // Readable font size
+        fontSize: isNarrowScreen ? '10px' : '20px',
         fontWeight: '600', // Semi-bold font weight
         color: '#ffffff', // White text for high contrast
         backgroundColor: '#4CAF50', // A green color indicating a positive action
@@ -181,53 +206,29 @@ const PayStudentList = () => {
         margin: '20px'
     };
 
-    const headingStyle = {
-        textAlign: 'center', // Centers the text
-        color: '#333', // A modern, neutral color
-        fontSize: '2rem', // A larger font size for the main heading
-        fontWeight: '300', // A lighter font weight for a modern look
-        textTransform: 'uppercase', // Uppercase text for stylistic preference
-        letterSpacing: '1px', // Spacing out letters a bit for readability
-        marginBottom: '1rem', // Adding some space below the heading
-        paddingTop: '20px', // Padding at the top to push the content down a bit
-    };
-
-    const deleteButtonStyle = {
-        padding: '8px 16px',
-        fontSize: '14px',
-        fontWeight: 'bold',
-        color: '#fff',
-        backgroundColor: '#dc3545', // Bootstrap's red color for danger actions
-        border: 'none',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        outline: 'none',
-        transition: 'opacity 0.3s ease',
-    };
-    const warningStyle  = {
-        color:'red'
-    }
-
-
-    const deleteButtonHoverStyle = {
-        opacity: '0.8',
-    };
-
     return (
         <div className="student-list-container">
-            <h1 style={headingStyle}>Payment</h1>
-            <p className='warning' style={warningStyle}>Delete facility is available only before payment.
- </p>
-<p lassName='warning' style={warningStyle}> No edit / delete allowed once fees is Paid.</p>
-<p lassName='warning' style={warningStyle}> डिलिट सुविधा फक्त फी भरण्यापूर्वी उपलब्ध आहे..</p>
-<p lassName='warning' style={warningStyle}> एकदा फी भरल्यानंतर एडिट / डिलिट करता येणार नाही.</p>
-
+            <h1 className='heading'>Fees Payment</h1>
+            <div className='warning'>
+                <p>Delete facility is available only before payment.</p>
+                <p>No edit / delete allowed once fees is Paid.</p>
+                <p>डिलिट सुविधा फक्त फी भरण्यापूर्वी उपलब्ध आहे.</p>
+                <p>एकदा फी भरल्यानंतर एडिट / डिलिट करता येणार नाही</p>
+            </div>
             <table className="student-table">
                 <thead>
                     <tr>
-                        <th></th> {/* Empty header for the checkbox column */}
-                        <th>Delete</th>
+                        <th>
+                            Select All            
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        className="custom-checkbox"
+                                        checked={selectAll}
+                                        onChange={(e) => handleSelectAll(e.target.checked)}
+                                    />
+                                </div>
+                            </th>
                         <th>Image</th>
                         <th>ID</th>
                         <th>Institute ID</th>
@@ -240,6 +241,8 @@ const PayStudentList = () => {
                         <th>Amount</th>
                         <th>Batch Year</th>
                         <th>Subject</th>
+                        <th>Edit</th> 
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -247,20 +250,11 @@ const PayStudentList = () => {
                         <tr key={student.student_id}>
                             <td>
                                 <input
+                                    className='custom-checkbox'
                                     type="checkbox"
                                     checked={selectedStudents.has(student.student_id)}
                                     onChange={() => handleSelectStudent(student.student_id)}
                                 />
-                            </td>
-                            <td>
-                                <button
-                                    onClick={() => handleDeleteStudent(student.student_id)}
-                                    style={deleteButtonStyle}
-                                    onMouseOver={(e) => e.currentTarget.style.opacity = deleteButtonHoverStyle.opacity}
-                                    onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-                                >
-                                    Delete
-                                </button>
                             </td>
                             <td>{renderImage(student.image)}</td>
                             <td>{student.student_id}</td>
@@ -274,6 +268,22 @@ const PayStudentList = () => {
                             <td>{student.amount}</td>
                             <td>{student.batch_year}</td>
                             <td>{student.subject_name}</td>
+                            <td>
+                                <button
+                                    onClick={() => handleEditStudent(student.student_id)}
+                                    className='editButton'
+                                >
+                                    Edit
+                                </button>
+                            </td>
+                            <td>
+                                <button
+                                    onClick={() => handleDeleteStudent(student.student_id)}
+                                    className='deleteButton'
+                                >
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -281,6 +291,7 @@ const PayStudentList = () => {
             <div>{Array.from(selectedStudents).join(', ')}</div>
             <div className="payment-info">
                 <button
+                    className='payButton'
                     onClick={handlePaymentInitiation}
                     disabled={selectedStudents.size === 0}
                     style={selectedStudents.size === 0 ? buttonDisabledStyle : buttonStyle}

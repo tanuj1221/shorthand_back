@@ -15,7 +15,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/check-auth')
+    axios.get('http://3.110.77.175:3000/check-auth')
       .then(response => {
         setIsAuthenticated(response.data.isAuthenticated);
         console.log(response.data.isAuthenticated);

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import string
+import ast
 
 
 
@@ -107,9 +108,14 @@ def count_mistakes_and_rebuild_passage(original, answer, ignore_list=[]):
 
     return mistakes
 
+def convert_to_list(str_list):
+    # Remove the leading '[' and trailing ']' characters
+    str_list = str_list.strip()[1:-1]
+    # Split the string by commas and strip whitespace from each element
+    return [item.strip() for item in str_list.split(',')]
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/compare-text', methods=['POST'])
 def compare_text():
@@ -118,7 +124,10 @@ def compare_text():
     original = data.get('original')
     answer = data.get('answer')
     ignore_words=data.get('list')
-    print(ignore_words)
+    # ignore_words = convert_to_list(ignore_words)
+    ignore_words=['am']
+  
+    print(type(ignore_words))
     # ignore_words = ['//१//', '//२//', '//३//', '//४//']
 
     if not original or not answer:
@@ -129,4 +138,4 @@ def compare_text():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

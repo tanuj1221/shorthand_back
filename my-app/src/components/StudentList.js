@@ -10,7 +10,7 @@ const StudentList = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://3.110.77.175:3000/getstudents');
+        const response = await axios.get('http://localhost:3000/getstudents');
         setStudents(response.data);
       } catch (error) {
         console.error('Failed to fetch students:', error);
@@ -19,6 +19,7 @@ const StudentList = () => {
 
     fetchStudents();
   }, []);
+  
   const handleSearch = event => {
     setSearchTerm(event.target.value.toLowerCase());
   };
@@ -101,7 +102,15 @@ const StudentList = () => {
                 <td>{student.middleName}</td>
                 <td>{student.motherName}</td>
             
-                <td>{student.amount}</td>
+                <td>
+                  {student.amount === 'pending' ? (
+                      <span className="pending-amount">{student.amount}</span>
+                  ) : student.amount === 'paid' ? (
+                      <span className="paid-amount">{student.amount}</span>
+                  ) : (
+                      student.amount
+                  )}
+                </td>
                 <td>{student.batch_year}</td>
                 <td>{student.subject_name}</td>
               </tr>

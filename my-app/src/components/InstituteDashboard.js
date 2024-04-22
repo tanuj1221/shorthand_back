@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../InstituteDashboard.css';
-import logo from '../images/GCC-TBC.png'; // Import the logo image
-// import LoginForm from './StudentForm';
-// import StudentList from './StudentList';
-// import PayStudentList from './PayStudentList';
-// import Dashboard from './Dashboard'; // Import the Dashboard component
+import logo from '../images/GCC-TBC.png';
 import { Link, Outlet } from 'react-router-dom';
-
 
 const InstituteDashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [instituteName, setInstituteName] = useState('Loading Institute...'); // Initial placeholder
+  const [instituteId, setInstituteId] = useState('Loading ID');
+
+  useEffect(() => {
+    // Retrieve the instituteName from localStorage
+    const storedInstituteName = localStorage.getItem('instituteName');
+    const storedInstituteId = localStorage.getItem('instituteId');
+
+    if (storedInstituteName) {
+      setInstituteName(storedInstituteName);
+    } else {
+      setInstituteName('Institute Name Not Found'); // Fallback text
+    }
+
+    if (storedInstituteId) {
+      setInstituteId(storedInstituteId);
+    } else {
+      setInstituteId('ID Not Found');
+    }
+  }, []); // Empty dependency array ensures this runs only once at mount
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Function to close the sidebar if it is open
   const closeSidebar = () => {
     if (isSidebarOpen) {
       setIsSidebarOpen(false);
@@ -30,13 +44,13 @@ const InstituteDashboard = () => {
           <div className="text-normal" style={{ whiteSpace: 'nowrap', fontSize: '0.9rem', display: 'block', alignItems: 'center', fontWeight: 'bold' }}>
             <span>MSCE PUNE COMPUTER SHORTHAND DEMO</span>
             <div className="institute-info">
-              15001 ABC Comouter Typing Institute
+              {instituteId}-{instituteName} {/* Display the dynamic institute name */}
             </div>
           </div>
         </div>
         <ul className={`menu-links ${isSidebarOpen ? 'open' : ''}`}>
           <li className="nav-link" onClick={closeSidebar}>
-            <Link to="/dashboard">
+            <Link to="overview">
               <span>Dashboard</span>
             </Link>
           </li>

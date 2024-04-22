@@ -13,14 +13,22 @@ function InstituteLogin({ setIsAuthenticated }) {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://3.110.77.175:3000/login_institute/', {
-        userId: instituteId,
-        password: password
+      const response = await axios.post('http://localhost:3000/login_institute/', {
+        userId: instituteId,  // Make sure `instituteId` is correctly defined and passed
+        password: password    // Make sure `password` is correctly defined and passed
       });
-      console.log('Logged in successfully:', response.data);
-      setErrorMessage('');
-      setIsAuthenticated(true);
-      navigate('/dashboard/registration');
+      if (response.status === 200) {
+        console.log('Logged in successfully:', response.data);
+        // Save the instituteName and instituteId to localStorage
+        localStorage.setItem('instituteName', response.data.instituteName);
+        localStorage.setItem('instituteId', response.data.instituteId); // Assuming the ID is returned as instituteId
+        
+        setErrorMessage('');
+        setIsAuthenticated(true);
+        navigate('/dashboard/registration'); // Adjust the path if necessary
+      } else {
+        setErrorMessage('Login failed');
+      }
     } catch (error) {
       if (error.response) {
         console.log(error.response.data);
@@ -40,7 +48,7 @@ function InstituteLogin({ setIsAuthenticated }) {
       <div className="cookie-consent-container"></div>
       <div className="box">
         <span className="borderLine"></span>
-        <form>
+        <form onSubmit={handleLogin}>
           <img className="logo" src={logo} alt="Logo" />
           <h2>Sign In</h2>
           <div id='inputBox' className="inputBox">
@@ -64,7 +72,7 @@ function InstituteLogin({ setIsAuthenticated }) {
             <i></i>
           </div>
           <div className="links"></div>
-          <input type="submit" value="Login" onClick={handleLogin} />
+          <input type="submit" value="Login" />
         </form>
       </div>
       {errorMessage && <div className="error-message" style={{ color: 'red' }}>{errorMessage}</div>}

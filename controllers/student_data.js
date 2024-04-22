@@ -28,6 +28,29 @@ exports.loginStudent = async (req, res) => {
   }
 };
 
+exports.logoutStudent = (req, res) => {
+  // Checking if the student session exists
+  console.log('logged out')
+  if (req.session.studentId) {
+      // Destroy the session
+      req.session.destroy(err => {
+          if (err) {
+              // Error occurred during session destroy
+              res.status(500).send("Failed to log out, please try again.");
+          } else {
+              // Optionally clear the client-side cookie if it's not set to auto-clear
+              res.clearCookie('connect.sid');  // Adjust the cookie name according to your settings
+
+              // Send a successful logout message
+              res.send("Logged out successfully.");
+          }
+      });
+  } else {
+      // If there is no session, indicating the user was not logged in
+      res.status(400).send("No active session to log out from.");
+  }
+};
+
 
 exports.changePassword = async (req, res) => {
     const { newPassword } = req.body;

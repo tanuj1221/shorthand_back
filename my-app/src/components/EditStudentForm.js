@@ -25,7 +25,7 @@ const EditStudentForm = () => {
 
   useEffect(() => {
     if (studentId) {
-      axios.get(`http://3.110.77.175:3000/students/details/${studentId}`)
+      axios.get(`http://localhost:3000/students/details/${studentId}`)
         .then(response => {
           const studentData = response.data;
           setStudentDetails(studentData);
@@ -46,7 +46,7 @@ const EditStudentForm = () => {
   useEffect(() => {
     // Fetch batch years independently as it doesn't depend on student details
     const fetchBatchInfo = async () => {
-      const result = await axios('http://3.110.77.175:3000/batch');
+      const result = await axios('http://localhost:3000/batch');
       setBatchYears(result.data.map(batch => batch.batch_year));
     };
     fetchBatchInfo();
@@ -58,7 +58,7 @@ const EditStudentForm = () => {
     if (selectedYear) {
       const fetchSemesters = async () => {
         try {
-          const result = await axios(`http://3.110.77.175:3000/batch?batch_year=${selectedYear}`);
+          const result = await axios(`http://localhost:3000/batch?batch_year=${selectedYear}`);
           setSemesters(result.data);
           // Set semester here might not be correct if studentDetails isn't ready yet
         } catch (error) {
@@ -105,7 +105,7 @@ const EditStudentForm = () => {
     };
   
     try {
-      const response = await axios.put(`http://3.110.77.175:3000/students/${studentId}`, updatedStudentDetails);
+      const response = await axios.put(`http://localhost:3000/students/${studentId}`, updatedStudentDetails);
       alert('Student updated successfully!');
       console.log(response.data);
     } catch (error) {
@@ -253,11 +253,6 @@ const EditStudentForm = () => {
       backgroundSize: '12px', // Size of the dropdown arrow
     };
     
-    const checkboxContainerStyle = {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center'
-    };
     
     const buttonStyle = {
       gridColumn: '1/-1', // Adjust grid column span
@@ -316,19 +311,6 @@ const EditStudentForm = () => {
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
       gridColumn: '1 / -1', // Span across all columns in the grid
     };
-    
-    const subjectGridStyle = {
-      display: 'grid',
-      gridTemplateColumns: isVeryNarrowScreen ? 'repeat(2, 1fr)' : 'repeat(6, 1fr)', // Adjust column count for narrower screens
-      gap: '20px',
-      padding: '10px',
-      alignItems: 'center',
-      justifyContent: 'start',
-    };
-    
-    const subjectStyle = {
-      fontSize: isVeryNarrowScreen ? '10px' : '16px'// Smaller font size for very narrow screens
-    }
 
   return (
     <div>
@@ -398,23 +380,44 @@ const EditStudentForm = () => {
           </div>
 
           <div style={stackGroupStyle}>
-
             <div style={formGroupStyle}>
-            <label style={labelStyle}>Upload Photo(20-50 kb size)</label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}  
-              style={fileInputStyle}
-              required={!studentDetails.image}  // Only require if no image is already loaded
+              <label style={labelStyle}>Upload Photo (20-50 KB size)</label>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={fileInputStyle}
               />
-            {imagePreview && (
-              <div>
-                <img src={imagePreview} alt="Preview" style={imagePreviewStyle} />
-              </div>
-            )}
-          </div>
+              {imagePreview ? (
+                <div>
+                  <img src={imagePreview} alt="Preview" style={imagePreviewStyle} />
+                  <div style={{
+                    display: 'flex', // Use flexbox to align items
+                    justifyContent: 'center', // Center horizontally in the flex container
+                    marginTop: '10px' // Add some space above this div
+                  }}>
+                    <button type="button" onClick={() => {
+                      setImagePreview(null);
+                      setStudentDetails(prevDetails => ({ ...prevDetails, image: '' }));
+                    }}
+                      style={{
+                        padding: '10px 20px', // Padding inside the button for better touch area
+                        backgroundColor: '#f44336', // A red color for the remove button, indicating a destructive action
+                        color: 'white', // White text color for contrast
+                        border: 'none', // No border
+                        borderRadius: '4px', // Rounded corners
+                        cursor: 'pointer', // Cursor indicates clickable area
+                        fontSize: '16px', // Font size for readability
+                      }}>
+                      Remove Image
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p>No image selected. Please upload an image.</p>
+              )}
+            </div>
           </div>
 
         <button type="submit" style={buttonStyle}>Submit</button>

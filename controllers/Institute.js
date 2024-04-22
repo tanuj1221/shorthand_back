@@ -129,6 +129,56 @@ exports.registerStudent = async (req, res) => {
 //   };
 
 
+exports.updateStudent = async (req, res) => {
+  const studentId = req.params.studentId; // Extracting studentId from URL parameters
+  const {
+    firstName,
+    lastName,
+    motherName,
+    middleName,
+    batch_year,
+    sem,
+    image,
+    mobile_no,
+    email,
+  } = req.body; // Extracting all fields from the request body
+
+  const updateQuery = `
+    UPDATE student14 
+    SET 
+      firstName = ?,
+      lastName = ?,
+      motherName = ?,
+      middleName = ?,
+      batch_year = ?,
+      sem = ?,
+      image = ?,
+      mobile_no = ?,
+      email = ?
+    WHERE student_id = ?;
+  `;
+
+  try {
+    await connection.query(updateQuery, [
+      firstName,
+      lastName,
+      motherName,
+      middleName,
+      batch_year,
+      sem,
+      image,
+      mobile_no,
+      email,
+      studentId,
+      image
+    ]);
+    res.send('Student updated successfully');
+  } catch (err) {
+    console.error('Error updating student:', err);
+    res.status(500).send('Error updating student');
+  }
+};
+
 exports.getstudentslist = async (req, res) => {
   try {
      const instituteId = req.session.instituteId;
@@ -237,7 +287,47 @@ exports.getPendingAmountStudentsList = async (req, res) => {
       res.status(500).send("Failed to retrieve data");
   }
 }
+// Assuming you have 'connection' set up to handle MySQL queries
+exports.getStudentById = async (req, res) => {
+  try {
+    const studentId = req.params.id;  // Correct this line
+    const studentQuery = `
+      SELECT
+        student_id, firstName, lastName, middleName, motherName, sem,
+        mobile_no, email, batch_year, subjectsId, image
+      FROM
+        student14
+      WHERE
+        student_id = ?;
+    `;
+    const [student] = await connection.query(studentQuery, [studentId]);
 
+    console.log(student, studentId)
+    if (student.length === 0) {
+      res.status(404).send("Student not found");
+      return;
+    }
+
+    // Assuming subjectsId contains comma-separated subject IDs
+    const subjectQuery = `
+      SELECT subjectId, subject_name FROM subjectsDb
+      WHERE subjectId IN (?);
+    `;
+    const subjectsIds = student[0].subjectsId.split(',');
+    const [subjects] = await connection.query(subjectQuery, [subjectsIds]);
+
+    // Add subjects directly into the student object
+    student[0].subjects = subjects.map(sub => ({
+      subjectId: sub.subjectId,
+      subject_name: sub.subject_name
+    }));
+
+    res.json(student[0]);
+  } catch (err) {
+    console.error("Database error:", err);
+    res.status(500).send("Failed to retrieve student data");
+  }
+};
 
 exports.deleteStudent = async (req, res) => {
     const studentId = req.params.id;

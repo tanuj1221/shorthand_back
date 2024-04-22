@@ -29,6 +29,31 @@ exports.loginInstitute = async (req, res) => {
 };
 
 
+exports.getInstituteDetails = async (req, res) => {
+  console.log("Fetching institute details");
+  // Assuming the instituteId is stored in the session when the institute logs in
+  const instituteId = req.session.instituteId;
+  
+  if (!instituteId) {
+      return res.status(403).send('No institute session found');
+  }
+
+  const query = 'SELECT instituteId, InstituteName FROM institutedb WHERE instituteId = ?';
+
+  try {
+      const [results] = await connection.query(query, [instituteId]);
+      if (results.length > 0) {
+          const instituteDetails = results[0];
+          console.log(instituteDetails);
+          res.send(instituteDetails);
+      } else {
+          res.status(404).send('Institute not found');
+      }
+  } catch (err) {
+      res.status(500).send(err.message);
+  }
+};
+
 
 exports.getStudentsByInstitute = async (req, res) => {
   if (!req.session || !req.session.instituteId) {

@@ -9,22 +9,31 @@ const InstituteDashboard = () => {
   const [instituteId, setInstituteId] = useState('Loading ID');
 
   useEffect(() => {
-    // Retrieve the instituteName from localStorage
-    const storedInstituteName = localStorage.getItem('instituteName');
-    const storedInstituteId = localStorage.getItem('instituteId');
-
-    if (storedInstituteName) {
-      setInstituteName(storedInstituteName);
-    } else {
-      setInstituteName('Institute Name Not Found'); // Fallback text
-    }
-
-    if (storedInstituteId) {
-      setInstituteId(storedInstituteId);
-    } else {
-      setInstituteId('ID Not Found');
-    }
-  }, []); // Empty dependency array ensures this runs only once at mount
+    // Assuming the endpoint to fetch institute details is '/api/institute/details'
+    fetch('http://3.110.77.175:3000/institutedetails', {
+      method: 'GET',
+      headers: {
+        // Assuming you are using sessions or token based authentication
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch institute details');
+      }
+      return response.json();
+    })
+    .then(data => {
+      setInstituteName(data.InstituteName || 'Institute Name Not Found');
+      setInstituteId(data.instituteId || 'ID Not Found');
+    })
+    .catch(error => {
+      console.error('Error fetching institute details:', error);
+      setInstituteName('Error loading institute name');
+      setInstituteId('Error loading ID');
+    });
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

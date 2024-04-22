@@ -35,5 +35,6 @@ router.delete('/deletetable/:tableName', async (req, res) => {
 });
 router.get('/students/details/:id', instituteController.getStudentById);
 router.put('/students/:studentId', instituteController.updateStudent);
+router.get('/institutedetails',isAuthenticatedInsti,instituteController.getInstituteDetails)
 
 module.exports = router;  

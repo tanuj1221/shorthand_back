@@ -12,6 +12,6 @@ router.post('/change-password', isAuthenticated, studentController.changePasswor
 router.post('/updateTimerEndpoint', isAuthenticated, studentController.updateTimer);
 router.get('/subinfo', isAuthenticated, studentController.getStudentSubjectInfo);
 router.post('/logout', isAuthenticated, studentController.logoutStudent);
-router.get('/save-data',isAuthenticated,studentController.saveData)
+router.post('/save-data',studentController.saveData)
 
 module.exports = router;

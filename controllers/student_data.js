@@ -166,9 +166,10 @@ exports.updateTimer = async (req, res) => {
 exports.getStudentSubjectInfo = async (req, res) => {
   try {
     const userId = req.session.studentId;  // Get student ID from the session, assumed to be stored as a string
+    console.log('this fetched')
 
     const studentSubjectsQuery = `
-      SELECT s.student_id, s.image, CONCAT(s.firstName, ' ', s.lastName) AS studename, sub.subject_name, sub.subjectId
+      SELECT s.student_id, s.image,s.instituteId, CONCAT(s.firstName, ' ', s.lastName) AS studename, sub.subject_name, sub.subjectId
       FROM student14 AS s
       JOIN JSON_TABLE(
         s.subjectsId,
@@ -187,5 +188,33 @@ exports.getStudentSubjectInfo = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Internal Server Error: ' + err.message);
+  }
+};
+
+
+
+exports.saveData = async (req, res) => {
+  try {
+    const { answer, original, list, student_id, instituteId, subjectId } = req.body;
+    console.log(req.body); // Logging the body to see what's received
+
+    // Basic validation (you might want to add more complex checks here)
+    if (!answer || !original || !list || !student_id || !instituteId || !subjectId) {
+      return res.status(400).send('Missing required fields');
+    }
+
+    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId) 
+                         VALUES (?, ?, ?, ?, ?, ?)`;
+    
+    const [result] = await connection.query(insertQuery, [answer.trim(), original, list, student_id, instituteId, subjectId]);
+
+    if (result.affectedRows > 0) {
+      res.send('Data saved successfully');
+    } else {
+      res.status(400).send('Failed to save data');
+    }
+  } catch (err) {
+    console.error('Error saving data:', err);
+    res.status(500).send(err.message);
   }
 };

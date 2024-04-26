@@ -3,7 +3,7 @@ from flask_cors import CORS
 import string
 import ast
 
-
+import requests
 
 from Levenshtein import distance as levenshtein_distance
 
@@ -120,21 +120,32 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route('/compare-text', methods=['POST'])
 def compare_text():
     data = request.get_json()
+    print(data)
 
     original = data.get('original')
     answer = data.get('answer')
-    ignore_words=data.get('list')
-    # ignore_words = convert_to_list(ignore_words)
-    ignore_words=['am']
-  
-    print(type(ignore_words))
-    # ignore_words = ['//१//', '//२//', '//३//', '//४//']
+    list_words = data.get('list', [])  # Default to an empty list if not provided
+    student_id = data.get('student_id')
+    instituteId = data.get('instituteId')
+    subjectId = data.get('subjectId')
 
-    if not original or not answer:
-        return jsonify({'error': 'Missing text inputs'}), 400
+    if not original or not answer or not student_id or not instituteId or not subjectId:
+        return jsonify({'error': 'Missing required fields'}), 400
 
-    result = count_mistakes_and_rebuild_passage(original, answer, ignore_words)
-    print(result)
+    # Assuming count_mistakes_and_rebuild_passage is defined elsewhere and works correctly
+    result = count_mistakes_and_rebuild_passage(original, answer, list_words)
+
+    # Now send the data to the Node.js API
+    api_url = 'http://localhost:3000/save-data'  # Replace with the actual URL of your Node.js API
+    api_data = {
+        'original': original,
+        'answer': answer,
+        'list': str(list_words),  # Convert list to string if needed
+        'student_id': student_id,
+        'instituteId': instituteId,
+        'subjectId': subjectId
+    }
+    response = requests.post(api_url, json=api_data)
     return jsonify(result)
 
 if __name__ == '__main__':

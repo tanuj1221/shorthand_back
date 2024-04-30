@@ -8,6 +8,7 @@ const instituteController = require('../controllers/Institute');
 
 // institute logion
 router.post('/login_institute', instituteController.loginInstitute);
+router.post('/logoutinsti',isAuthenticatedInsti, instituteController.logoutInstitute);
 router.get('/students', isAuthenticatedInsti, instituteController.getStudentsByInstitute);
 router.post('/registerstudent',isAuthenticatedInsti,instituteController.registerStudent);
 router.get('/getstudents', isAuthenticatedInsti, instituteController.getstudentslist);

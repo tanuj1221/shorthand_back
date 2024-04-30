@@ -136,7 +136,7 @@ def compare_text():
     result = count_mistakes_and_rebuild_passage(original, answer, list_words)
 
     # Now send the data to the Node.js API
-    api_url = 'http://localhost:3000/save-data'  # Replace with the actual URL of your Node.js API
+    api_url = 'http://3.110.77.175:3000/save-data'  # Replace with the actual URL of your Node.js API
     api_data = {
         'original': original,
         'answer': answer,

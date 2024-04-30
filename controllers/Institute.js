@@ -29,6 +29,24 @@ exports.loginInstitute = async (req, res) => {
 };
 
 
+exports.logoutInstitute = (req, res) => {
+  console.log("Session ID before logout: ", req.session.instituteId); // Log session ID
+  if (req.session) {
+      console.log("Session exists, proceeding with destruction.");
+      req.session.destroy(err => {
+          if (err) {
+              console.error("Failed to destroy the session during logout", err);
+              return res.status(500).send("Could not log out, please try again.");
+          }
+          res.clearCookie('connect.sid');
+          res.send("Logged out successfully");
+      });
+  } else {
+      console.log("No active session found during logout attempt.");
+      res.status(400).send("No active session found");
+  }
+};
+
 exports.getInstituteDetails = async (req, res) => {
   console.log("Fetching institute details");
   // Assuming the instituteId is stored in the session when the institute logs in

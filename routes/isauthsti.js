@@ -20,4 +20,14 @@ router.get('/check-auth', (req, res) => {
         res.json({ isAuthenticated: false });
     }
 });
+
+
+router.get('/check-admin', (req, res) => {
+    if (req.session && req.session.adminid) {
+        console.log('uthentication')
+        res.json({ isAdminAuthenticated: true });
+    } else {
+        res.json({ isAdminAuthenticated: false });
+    }
+});
 module.exports = router;

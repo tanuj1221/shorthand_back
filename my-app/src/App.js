@@ -9,15 +9,17 @@ import StudentList from './components/StudentList';
 import PayStudentList from './components/PayStudentList';
 import EditStudentForm from './components/EditStudentForm';
 import Dashboard from './components/Dashboard';
-
+import AdminLoginComponent from './components/AdminLoginComponent';
+import AdminDashboard from './components/AdminDashboard';
 axios.defaults.withCredentials = true;
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://3.110.77.175:3000/check-auth')
+    axios.get('http://localhost:3000/check-auth')
       .then(response => {
         setIsAuthenticated(response.data.isAuthenticated);
         console.log(response.data.isAuthenticated);
@@ -30,16 +32,34 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    axios.get('http://localhost:3000/check-admin')
+      .then(response => {
+        setIsAdminAuthenticated(response.data.isAdminAuthenticated);
+        console.log(response.data.isAdminAuthenticated);
+      })
+      .catch(() => {
+        setIsAdminAuthenticated(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  
+
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; 
   }
 
-  return (
+  return ( 
     <Router>
       <Routes>
-        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />
+      <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/admin_login" />} />
+       <Route path="/admin_login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
+       <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />
         <Route path="/login_institute" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginComponent setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/dashboard" element={isAuthenticated ? <InstituteDashboard /> : <Navigate to="/login_institute" />}>
+        <Route path="/dashboard" element={isAuthenticated ? <InstituteDashboard setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login_institute" />}>
           <Route path="students" element={<StudentList />} />
           <Route path="registration" element={<StudentForm />} />
           <Route path="paystudents" element={<PayStudentList />} />

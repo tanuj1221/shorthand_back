@@ -2,38 +2,50 @@ import React, { useState, useEffect } from 'react';
 import '../InstituteDashboard.css';
 import logo from '../images/GCC-TBC.png';
 import { Link, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const InstituteDashboard = () => {
+
+const InstituteDashboard = ({ setIsAuthenticated }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [instituteName, setInstituteName] = useState('Loading Institute...'); // Initial placeholder
   const [instituteId, setInstituteId] = useState('Loading ID');
+  const navigate = useNavigate();
+  fetch('http://localhost:3000/institutedetails', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Failed to fetch institute details: ${response.status} ${response.statusText}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    setInstituteName(data.InstituteName || 'Institute Name Not Found');
+    setInstituteId(data.instituteId || 'ID Not Found');
+  })
+  .catch(error => {
+    console.error('Error fetching institute details:', error);
+    setInstituteName('Error loading institute name');
+    setInstituteId('Error loading ID');
+  });
 
-  useEffect(() => {
-    // Assuming the endpoint to fetch institute details is '/api/institute/details'
-    fetch('http://3.110.77.175:3000/institutedetails', {
-      method: 'GET',
-      headers: {
-        // Assuming you are using sessions or token based authentication
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch institute details');
-      }
-      return response.json();
-    })
-    .then(data => {
-      setInstituteName(data.InstituteName || 'Institute Name Not Found');
-      setInstituteId(data.instituteId || 'ID Not Found');
-    })
-    .catch(error => {
-      console.error('Error fetching institute details:', error);
-      setInstituteName('Error loading institute name');
-      setInstituteId('Error loading ID');
-    });
-  }, []);
+  const handleLogout = async () => {
+    try {
+      // Send a request to the backend to destroy the session
+      await axios.post('http://localhost:3000/logoutinsti');
+
+      setIsAuthenticated(false);
+      // Redirect to the login page
+      navigate('/login_institute');
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -81,7 +93,7 @@ const InstituteDashboard = () => {
         </ul>
         <div className="nav-link">
           <div className="menu-container">
-            <Link to="/login_institute" className="logout-link" onClick={closeSidebar}>
+            <Link to="/login_institute" className="logout-link" onClick={handleLogout}>
               <span>Log Out</span>
             </Link>
             <button className="menu-toggle" onClick={toggleSidebar}>☰</button>

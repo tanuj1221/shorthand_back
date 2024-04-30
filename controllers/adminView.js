@@ -1,6 +1,6 @@
 const connection = require('../config/db1');
 
-
+const pool = require('../config/db1');
 exports.getDistricts = async (req, res) => {
     try {
         const batchQuery = "SELECT * FROM district";
@@ -45,8 +45,9 @@ exports.getAllTables = async (req, res) => {
             connection.release();
   
             // Extract table names and send them in the response
-            const tableNames = results.map(row => row.table_name);
+            const tableNames = results.map(row => row.TABLE_NAME); // Adjusted from table_name to TABLE_NAME
             res.json({ tables: tableNames });
+            console.log(tableNames); // Log the correct table names to verify
         } catch (error) {
             connection.release();
             console.error('Failed to retrieve table names:', error);
@@ -56,8 +57,7 @@ exports.getAllTables = async (req, res) => {
         console.error('Database connection error:', error);
         res.status(500).json({ error: 'Database connection error' });
     }
-  };
-
+};
 
   
 exports.loginadmin= async (req, res) => {
@@ -74,7 +74,7 @@ exports.loginadmin= async (req, res) => {
   
             if (institute.password === password) {
                 // Set institute session
-                req.session.instituteId = institute.instituteId;
+                req.session.adminid = institute.adminid;
                 res.send('Logged in successfully as an institute!');
             } else {
                 res.status(401).send('Invalid credentials for institute');

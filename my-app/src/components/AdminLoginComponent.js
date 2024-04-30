@@ -4,7 +4,7 @@ import logo from '../images/GCC-TBC.png';
 import { useNavigate } from 'react-router-dom';
 import '../style.css';
 
-function InstituteLogin({ setIsAuthenticated }) {
+function AdminLoginComponent({ setIsAdminAuthenticated  }) {
   const [instituteId, setInstituteId] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -13,31 +13,24 @@ function InstituteLogin({ setIsAuthenticated }) {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/login_institute/', {
-        userId: instituteId,  // Make sure `instituteId` is correctly defined and passed
-        password: password    // Make sure `password` is correctly defined and passed
+      const response = await axios.post('http://localhost:3000/admin_login/', {
+        userId: instituteId,
+        password: password
       });
       if (response.status === 200) {
         console.log('Logged in successfully:', response.data);
-        // Save the instituteName and instituteId to localStorage
-        localStorage.setItem('instituteName', response.data.instituteName);
-        localStorage.setItem('instituteId', response.data.instituteId); // Assuming the ID is returned as instituteId
-        
         setErrorMessage('');
-        setIsAuthenticated(true);
-        navigate('/dashboard/registration'); // Adjust the path if necessary
+        setIsAdminAuthenticated(true); // Correct usage of setIsAdminAuthenticated
+        navigate('/admin'); // Adjust the path if necessary
       } else {
         setErrorMessage('Login failed');
       }
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data);
         setErrorMessage(error.response.data);
       } else if (error.request) {
-        console.log(error.request);
         setErrorMessage('No response from server');
       } else {
-        console.log('Error', error.message);
         setErrorMessage('Login failed: ' + error.message);
       }
     }
@@ -81,4 +74,4 @@ function InstituteLogin({ setIsAuthenticated }) {
   );
 }
 
-export default InstituteLogin;
+export default AdminLoginComponent;

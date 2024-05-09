@@ -13,5 +13,7 @@ router.post('/updateTimerEndpoint', isAuthenticated, studentController.updateTim
 router.get('/subinfo', isAuthenticated, studentController.getStudentSubjectInfo);
 router.post('/logout', isAuthenticated, studentController.logoutStudent);
 router.post('/save-data',studentController.saveData)
-
+router.get('/subinfo1', isAuthenticated, studentController.getStudentSubjects12);
+router.get('/subinforeal',  studentController.getStudentSubjectInfo12);
 module.exports = router;
+

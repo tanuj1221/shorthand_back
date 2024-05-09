@@ -136,7 +136,36 @@ exports.getStudentSubjects = async (req, res) => {
   }
 }
 
+exports.getStudentSubjects12 = async (req, res) => {
+  try {
+    const userId = req.session.studentId;
+    const subjectQuery = "SELECT subjectsId FROM student14 WHERE student_id = ?";
 
+    const subjects = await connection.query(subjectQuery, [userId]);
+
+    // Check if the query returned any results
+    if (subjects.length > 0 && subjects[0].length > 0) {
+      // Parse the subjectsId assuming it is stored as a JSON string (e.g., "[101]")
+      const rawSubjectsId = subjects[0][0].subjectsId;
+      const parsedSubjectsId = JSON.parse(rawSubjectsId);  // Now should be an array, e.g., [101]
+
+      // Fetch details from subjectsDb table for the specific subject IDs
+      const subjectsDetailsQuery = 'SELECT * FROM subjectsDb WHERE subjectId IN (?)';
+      const subjectDetails = await connection.query(subjectsDetailsQuery, [parsedSubjectsId]);
+
+      if (subjectDetails.length > 0) {
+        res.json(subjectDetails[0]);
+      } else {
+        res.status(404).send('Subjects not found');
+      }
+    } else {
+      res.status(404).send('Student not found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+}
 
 exports.updateTimer = async (req, res) => {
   try {
@@ -191,7 +220,41 @@ exports.getStudentSubjectInfo = async (req, res) => {
   }
 };
 
+exports.getStudentSubjectInfo12 = async (req, res) => {
+  try {
+    const userId = req.session.studentId;  // Get student ID from the session, assumed to be stored as a string
+    console.log('this fetched123')
 
+    const studentSubjectsQuery = `
+  SELECT
+    s.student_id,
+    s.image,
+    s.instituteId,
+    CONCAT(s.firstName, ' ', s.lastName) AS studename,
+    s.rem_time,
+    sub.subject_name,
+    sub.subjectId,
+    sub.* -- Include all columns from subjectsDb table
+  FROM
+    student14 AS s
+    JOIN JSON_TABLE(
+      s.subjectsId,
+      '$[*]' COLUMNS(subjectId CHAR(50) COLLATE utf8mb4_unicode_ci PATH '$')
+    ) AS subjects ON s.student_id = ?
+    JOIN subjectsDb AS sub ON subjects.subjectId COLLATE utf8mb4_unicode_ci = sub.subjectId COLLATE utf8mb4_unicode_ci
+`;
+    const studentSubjects = await connection.query(studentSubjectsQuery, [userId]);
+
+    if (studentSubjects.length > 0) {
+      res.json(studentSubjects[0]);
+    } else {
+      res.status(404).send('No subjects found for this student');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error: ' + err.message);
+  }
+};
 
 exports.saveData = async (req, res) => {
   try {

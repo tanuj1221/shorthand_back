@@ -8,6 +8,7 @@ const datainput = require('./routes/inputDataRoutes');
 const subjectRoutes = require('./routes/subjectsroutes');
 const instituteRoutes = require('./routes/instituteRoutes')
 const adminView = require('./routes/adminViewRoutes')
+const mockroute = require('./routes/mockRoutes')
 const crypto = require('crypto');
 const connection = require('./config/db1');
 const auth1 = require('./routes/isauthsti')
@@ -116,6 +117,7 @@ app.use(datainput);
 app.use(subjectRoutes);
 app.use(instituteRoutes)
 app.use(adminView)
+app.use(mockroute)
 app.use(auth1)
 app.get('', (req, res) => {
   res.sendFile(path.join(__dirname+'/my-app/build/index.html'));

@@ -15,5 +15,6 @@ router.post('/logout', isAuthenticated, studentController.logoutStudent);
 router.post('/save-data',studentController.saveData)
 router.get('/subinfo1', isAuthenticated, studentController.getStudentSubjects12);
 router.get('/subinforeal',  studentController.getStudentSubjectInfo12);
+router.get('/updatetime',  studentController.updateRemTime);
 module.exports = router;
 

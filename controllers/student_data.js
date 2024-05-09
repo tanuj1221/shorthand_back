@@ -167,6 +167,19 @@ exports.getStudentSubjects12 = async (req, res) => {
   }
 }
 
+exports.updateRemTime = async (req, res) => {
+  try {
+    // Update the rem_time column of all rows in student14 table to '300'
+    const updateRemTimeQuery = "UPDATE student14 SET rem_time = '300'";
+    await connection.query(updateRemTimeQuery);
+
+    res.send('rem_time updated successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+}
+
 exports.updateTimer = async (req, res) => {
   try {
     const { timerValue } = req.body; // Directly using timerValue from the request body

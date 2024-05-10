@@ -77,13 +77,13 @@ def count_mistakes_and_rebuild_passage(original, answer, ignore_list=[]):
             original_future = original_words[i:i+3]
             answer_future = answer_words[j:j+3]
             found = False
-            for index in range(3):
+            for index in range(6):
                 if i + index < len(original_words) and helper(original_words[i + index], answer_words[j]) in [-1, 0, 1]:
                     found = True
                     if i + index != i:
                         missed_words = original_words[i:i + index]
                         mistakes['missing'].extend(missed_words)
-                        missed_words_formatted = ' '.join(f"[missing -> {word}]" for word in missed_words)
+                        missed_words_formatted = ' '.join(f"[-> {word}]" for word in missed_words)
                         rebuilt_answer.append(missed_words_formatted)
                     i += index
                     break
@@ -96,7 +96,7 @@ def count_mistakes_and_rebuild_passage(original, answer, ignore_list=[]):
     if i < len(original_words):
         missing_rest = original_words[i:]
         mistakes['missing'].extend(missing_rest)
-        missing_rest_formatted = ' '.join(f"[missing -> {word}]" for word in missing_rest)
+        missing_rest_formatted = ' '.join(f"[-> {word}]" for word in missing_rest)
         rebuilt_answer.append(missing_rest_formatted)
 
     if j < len(answer_words):
@@ -120,8 +120,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 @app.route('/compare-text', methods=['POST'])
 def compare_text():
     data = request.get_json()
-    print(data)
-
+    
     original = data.get('original')
     answer = data.get('answer')
     list_words = data.get('list', [])  # Default to an empty list if not provided
@@ -134,6 +133,7 @@ def compare_text():
 
     # Assuming count_mistakes_and_rebuild_passage is defined elsewhere and works correctly
     result = count_mistakes_and_rebuild_passage(original, answer, list_words)
+    print(result)
 
     # Now send the data to the Node.js API
     api_url = 'http://3.110.77.175:3000/save-data'  # Replace with the actual URL of your Node.js API

@@ -1,6 +1,10 @@
 // controllers/authController.js
 const connection = require('../config/db1');
 
+const xl = require('excel4node');
+const fs = require('fs');
+const path = require('path');
+
 
 exports.loginStudent = async (req, res) => {
   console.log("Trying student login");
@@ -269,6 +273,9 @@ exports.getStudentSubjectInfo12 = async (req, res) => {
   }
 };
 
+process.env.TZ = 'Asia/Kolkata';
+
+
 exports.saveData = async (req, res) => {
   try {
     const { answer, original, list, student_id, instituteId, subjectId } = req.body;
@@ -279,9 +286,9 @@ exports.saveData = async (req, res) => {
       return res.status(400).send('Missing required fields');
     }
 
-    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId) 
-                         VALUES (?, ?, ?, ?, ?, ?)`;
-    
+    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId, created_at)
+                         VALUES (?, ?, ?, ?, ?, ?, DEFAULT)`;
+
     const [result] = await connection.query(insertQuery, [answer.trim(), original, list, student_id, instituteId, subjectId]);
 
     if (result.affectedRows > 0) {
@@ -292,5 +299,55 @@ exports.saveData = async (req, res) => {
   } catch (err) {
     console.error('Error saving data:', err);
     res.status(500).send(err.message);
+  } finally {
+    await connection.end();
+  }
+};
+
+exports.downloadExcel = async (req, res) => {
+  try {
+    const [rows] = await connection.query('SELECT * FROM savedata');
+
+    // Define the CSV headers
+    const headers = [
+      'ID',
+      'Answer',
+      'Original',
+      'List',
+      'Student ID',
+      'Institute ID',
+      'Subject ID',
+      'Created At'
+    ];
+
+    // Initialize the CSV data with headers
+    let csvData = headers.join(',') + '\n';
+
+    // Iterate over the rows and append data to the CSV
+    rows.forEach((row) => {
+      const data = [
+        row.id,
+        row.answer,
+        row.original,
+        row.list,
+        row.student_id,
+        row.instituteId,
+        row.subjectId,
+        row.created_at
+      ];
+      csvData += data.map(field => `"${field}"`).join(',') + '\n';
+    });
+
+    // Set the response headers for file download
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=saved_data.csv');
+
+    // Send the CSV file as the response
+    res.send(csvData);
+  } catch (err) {
+    console.error('Error downloading CSV:', err);
+    res.status(500).send(err.message);
+  } finally {
+    await connection.end();
   }
 };

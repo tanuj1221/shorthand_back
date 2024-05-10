@@ -304,7 +304,7 @@ exports.saveData = async (req, res) => {
     console.error('Error saving data:', err);
     res.status(500).send(err.message);
   } finally {
-    await connection.end();
+    console.log('completed')
   }
 };   
 exports.downloadExcel = async (req, res) => {

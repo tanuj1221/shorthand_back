@@ -275,6 +275,8 @@ exports.getStudentSubjectInfo12 = async (req, res) => {
 
 process.env.TZ = 'Asia/Kolkata';
 
+const moment = require('moment-timezone');
+
 
 exports.saveData = async (req, res) => {
   try {
@@ -286,10 +288,12 @@ exports.saveData = async (req, res) => {
       return res.status(400).send('Missing required fields');
     }
 
-    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId, created_at)
-                         VALUES (?, ?, ?, ?, ?, ?, DEFAULT)`;
+    const indianTime = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
 
-    const [result] = await connection.query(insertQuery, [answer.trim(), original, list, student_id, instituteId, subjectId]);
+    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId, created_at)
+                         VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    const [result] = await connection.query(insertQuery, [answer.trim(), original, list, student_id, instituteId, subjectId, indianTime]);
 
     if (result.affectedRows > 0) {
       res.send('Data saved successfully');
@@ -302,8 +306,7 @@ exports.saveData = async (req, res) => {
   } finally {
     await connection.end();
   }
-};
-
+};   
 exports.downloadExcel = async (req, res) => {
   try {
     const [rows] = await connection.query('SELECT * FROM savedata');
@@ -347,7 +350,5 @@ exports.downloadExcel = async (req, res) => {
   } catch (err) {
     console.error('Error downloading CSV:', err);
     res.status(500).send(err.message);
-  } finally {
-    await connection.end();
   }
 };

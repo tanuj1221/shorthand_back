@@ -29,8 +29,8 @@
     "mysql2": "^3.9.1",
     "nodemon": "^3.1.0",
     "nstall": "^0.2.0",
+    "path": "^0.12.7",
     "razorpay": "^2.9.2",
-    "styled-components": "^6.1.11",
-    "path": "^0.12.7"
+    "styled-components": "^6.1.11"
   }
 }

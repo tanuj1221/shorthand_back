@@ -1,6 +1,10 @@
 // controllers/authController.js
 const connection = require('../config/db1');
 
+const xl = require('excel4node');
+const fs = require('fs');
+const path = require('path');
+
 
 exports.loginStudent = async (req, res) => {
   console.log("Trying student login");
@@ -136,7 +140,49 @@ exports.getStudentSubjects = async (req, res) => {
   }
 }
 
+exports.getStudentSubjects12 = async (req, res) => {
+  try {
+    const userId = req.session.studentId;
+    const subjectQuery = "SELECT subjectsId FROM student14 WHERE student_id = ?";
 
+    const subjects = await connection.query(subjectQuery, [userId]);
+
+    // Check if the query returned any results
+    if (subjects.length > 0 && subjects[0].length > 0) {
+      // Parse the subjectsId assuming it is stored as a JSON string (e.g., "[101]")
+      const rawSubjectsId = subjects[0][0].subjectsId;
+      const parsedSubjectsId = JSON.parse(rawSubjectsId);  // Now should be an array, e.g., [101]
+
+      // Fetch details from subjectsDb table for the specific subject IDs
+      const subjectsDetailsQuery = 'SELECT * FROM subjectsDb WHERE subjectId IN (?)';
+      const subjectDetails = await connection.query(subjectsDetailsQuery, [parsedSubjectsId]);
+
+      if (subjectDetails.length > 0) {
+        res.json(subjectDetails[0]);
+      } else {
+        res.status(404).send('Subjects not found');
+      }
+    } else {
+      res.status(404).send('Student not found');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+}
+
+exports.updateRemTime = async (req, res) => {
+  try {
+    // Update the rem_time column of all rows in student14 table to '300'
+    const updateRemTimeQuery = "UPDATE student14 SET rem_time = '300'";
+    await connection.query(updateRemTimeQuery);
+
+    res.send('rem_time updated successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err.message);
+  }
+}
 
 exports.updateTimer = async (req, res) => {
   try {
@@ -191,6 +237,45 @@ exports.getStudentSubjectInfo = async (req, res) => {
   }
 };
 
+exports.getStudentSubjectInfo12 = async (req, res) => {
+  try {
+    const userId = req.session.studentId;  // Get student ID from the session, assumed to be stored as a string
+    console.log('this fetched123')
+
+    const studentSubjectsQuery = `
+  SELECT
+    s.student_id,
+    s.image,
+    s.instituteId,
+    CONCAT(s.firstName, ' ', s.lastName) AS studename,
+    s.rem_time,
+    sub.subject_name,
+    sub.subjectId,
+    sub.* -- Include all columns from subjectsDb table
+  FROM
+    student14 AS s
+    JOIN JSON_TABLE(
+      s.subjectsId,
+      '$[*]' COLUMNS(subjectId CHAR(50) COLLATE utf8mb4_unicode_ci PATH '$')
+    ) AS subjects ON s.student_id = ?
+    JOIN subjectsDb AS sub ON subjects.subjectId COLLATE utf8mb4_unicode_ci = sub.subjectId COLLATE utf8mb4_unicode_ci
+`;
+    const studentSubjects = await connection.query(studentSubjectsQuery, [userId]);
+
+    if (studentSubjects.length > 0) {
+      res.json(studentSubjects[0]);
+    } else {
+      res.status(404).send('No subjects found for this student');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error: ' + err.message);
+  }
+};
+
+process.env.TZ = 'Asia/Kolkata';
+
+const moment = require('moment-timezone');
 
 
 exports.saveData = async (req, res) => {
@@ -203,10 +288,12 @@ exports.saveData = async (req, res) => {
       return res.status(400).send('Missing required fields');
     }
 
-    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId) 
-                         VALUES (?, ?, ?, ?, ?, ?)`;
-    
-    const [result] = await connection.query(insertQuery, [answer.trim(), original, list, student_id, instituteId, subjectId]);
+    const indianTime = moment().tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss');
+
+    const insertQuery = `INSERT INTO savedata (answer, original, list, student_id, instituteId, subjectId, created_at)
+                         VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    const [result] = await connection.query(insertQuery, [answer.trim(), original, list, student_id, instituteId, subjectId, indianTime]);
 
     if (result.affectedRows > 0) {
       res.send('Data saved successfully');
@@ -215,6 +302,53 @@ exports.saveData = async (req, res) => {
     }
   } catch (err) {
     console.error('Error saving data:', err);
+    res.status(500).send(err.message);
+  } finally {
+    console.log('completed')
+  }
+};   
+exports.downloadExcel = async (req, res) => {
+  try {
+    const [rows] = await connection.query('SELECT * FROM savedata');
+
+    // Define the CSV headers
+    const headers = [
+      'ID',
+      'Answer',
+      'Original',
+      'List',
+      'Student ID',
+      'Institute ID',
+      'Subject ID',
+      'Created At'
+    ];
+
+    // Initialize the CSV data with headers
+    let csvData = headers.join(',') + '\n';
+
+    // Iterate over the rows and append data to the CSV
+    rows.forEach((row) => {
+      const data = [
+        row.id,
+        row.answer,
+        row.original,
+        row.list,
+        row.student_id,
+        row.instituteId,
+        row.subjectId,
+        row.created_at
+      ];
+      csvData += data.map(field => `"${field}"`).join(',') + '\n';
+    });
+
+    // Set the response headers for file download
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename=saved_data.csv');
+
+    // Send the CSV file as the response
+    res.send(csvData);
+  } catch (err) {
+    console.error('Error downloading CSV:', err);
     res.status(500).send(err.message);
   }
 };

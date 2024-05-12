@@ -43,30 +43,46 @@ exports.audiosFromId = async (req, res) => {
     try {
         // Extract subjectId from the request body
         const { subjectId } = req.body;
+        const userId = req.session.studentId;
 
-        // Check if subjectId is provided
-        if (!subjectId) {
-            return res.status(400).send("No subject ID provided.");
+        // Check if subjectId and userId are provided
+        if (!subjectId || !userId) {
+            return res.status(400).send("No subject ID or user ID provided.");
         }
 
-        // Prepare a parameterized query
-        const courseQuery = "SELECT * FROM audiodb1 WHERE subjectId = ?";
+        // Prepare a parameterized query to fetch the student's payment status
+        const paymentQuery = "SELECT amount FROM student14 WHERE student_id = ?";
 
-        console.log('Fetching courses for subject ID:', subjectId);
+        // Execute the query with the userId as a parameter
+        const [paymentResult] = await connection.query(paymentQuery, [userId]);
 
-        // Execute the query with the subjectId as a parameter
-        const courses = await connection.query(courseQuery, [subjectId]);
+        // Check if the payment status is found
+        if (paymentResult.length > 0) {
+            const { amount } = paymentResult[0];
 
-        // Check if any courses are found
-        if (courses.length > 0) {
-            res.json(courses[0]);
+            // Prepare a parameterized query to fetch audio records
+            const audioQuery = "SELECT * FROM audiodb1 WHERE subjectId = ?";
+
+            // Execute the query with the subjectId as a parameter
+            const audioRecords = await connection.query(audioQuery, [subjectId]);
+
+            // Check if any audio records are found
+            if (audioRecords.length > 0) {
+                // If the student has paid, send all audio records
+                if (amount === 'paid') {
+                    res.json(audioRecords[0]);
+                } else {
+                    // If the student hasn't paid, send only the first two records
+                    res.json(audioRecords[0].slice(0, 2));
+                }
+            } else {
+                res.status(404).send("No audio records found for the provided subject ID.");
+            }
         } else {
-            res.status(404).send("No courses found for the provided subject ID.");
+            res.status(404).send("No payment status found for the provided user ID.");
         }
     } catch (err) {
         console.error(err);
         res.status(500).send(err.message);
-
-        
     }
 };

@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.custom-table {
+  width: 100%; /* Adjust the width of the table to fit its container */
+  white-space: nowrap; /* Prevent line breaks within table cells */
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 8px; /* Adjust padding as needed */
+  border: 1px solid #ddd; /* Add borders to table cells */
+}
+
+.table-container {
+  width: 950%; /* Set a fixed width or maximum width */
+  max-width: 1000px; /* Maximum width, adjust as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  overflow-x: auto; /* Enable horizontal scrolling */
+}

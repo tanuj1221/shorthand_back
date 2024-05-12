@@ -73,6 +73,7 @@ const UpdateTable = () => {
             await axios.post(`http://localhost:3000/save-table/${selectedVal}`, data);
 
             console.log('Data saved successfullyy!');
+            alert("Data saved!");
         } catch (error) {
             console.error('Failed to save data:', error);
         }

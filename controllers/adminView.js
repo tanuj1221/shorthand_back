@@ -17,7 +17,6 @@ exports.getDistricts = async (req, res) => {
 };
 
 
-
 exports.getBatchData = async (req, res) => {
     try {
         const batchQuery = "SELECT * FROM batch";
@@ -32,7 +31,6 @@ exports.getBatchData = async (req, res) => {
         res.status(500).send(err);
     }
 };
-
 
 
 exports.getAllTables = async (req, res) => {
@@ -86,4 +84,56 @@ exports.loginadmin= async (req, res) => {
         res.status(500).send(err.message);
     }
   };
-  
+
+exports.getTheTable = async (req, res) => {
+    try {
+        const validTables = ['student14', 'admindb', 'audiodb1', 'batch', 'coursesdb1', 'institutedb', 'savedata', 'subjectsdb'];
+        const tableName = req.params.tableName;
+
+        if(!validTables.includes(tableName)){
+            return res.status(400).send('Nope, thats not a table sir!');
+        }
+
+        const tableQuery = `SELECT * FROM ${tableName}`;
+        const [table] = await connection.query(tableQuery, [tableName]);
+        
+        const str = "this is it";
+        console.log(table, tableName, str);
+
+        if (table.length === 0) {
+            res.status(404).send("table not found");
+            return;
+        }
+
+        res.json(table);
+    } catch (err) {
+        console.error("Database error:", err);
+        res.status(500).send("Failed to retrieve table data");
+    }
+};
+
+exports.saveTheTable = async (req, res) => {
+    try{
+        const tableName = req.params.tableName;
+        const tableData = req.body;
+
+        console.log("saveTheTable tableName: " + tableName);
+        console.log("saveTheTable tableData: " + tableData);
+        
+        //clear the table before repopulating
+        await connection.query(`TRUNCATE TABLE ${tableName};`);
+        
+        for(const row of tableData){
+            const insertQuery = `INSERT INTO ${tableName} VALUES (?)`;
+            const [table] = await connection.query(insertQuery, [Object.values(row)]);
+            console.log("shubh: backend: "+ [Object.values(row)]);
+        }
+
+        console.log('Data saved successfully');
+        res.status(200).json({ message: 'Table data saved successfully' });
+
+    }catch(err){
+        console.log("Exception saving table here is error: "+err);
+        res.status(500).json({ error: 'Failed to save data to DB' });
+    }
+};

@@ -14,18 +14,18 @@ import AdminDashboard from './components/AdminDashboard';
 axios.defaults.withCredentials = true;
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);  // shubh: set it back to false
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false); // shubh: set it back to
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios.get('http://localhost:3000/check-auth')
       .then(response => {
         setIsAuthenticated(response.data.isAuthenticated);
-        console.log(response.data.isAuthenticated);
+        console.log("isAuthenticated: "+response.data.isAuthenticated);
       })
       .catch(() => {
-        setIsAuthenticated(false);
+        setIsAuthenticated(true); //shubh: set it back to false
       })
       .finally(() => {
         setLoading(false);
@@ -39,7 +39,7 @@ const App = () => {
         console.log(response.data.isAdminAuthenticated);
       })
       .catch(() => {
-        setIsAdminAuthenticated(false);
+        setIsAdminAuthenticated(true);//shubh: set it back to false
       })
       .finally(() => {
         setLoading(false);
@@ -55,7 +55,8 @@ const App = () => {
   return ( 
     <Router>
       <Routes>
-      <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/admin_login" />} />
+      /*<Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/admin_login" />} />*/
+      <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <AdminDashboard />} />
        <Route path="/admin_login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />
         <Route path="/login_institute" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginComponent setIsAuthenticated={setIsAuthenticated} />} />

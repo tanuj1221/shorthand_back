@@ -7,8 +7,11 @@ const isAuthenticatedAdmin = require('../middleware/isAuthenticatedAdmin');
 // Route to handle password change
 router.get('/district',  adminView.getDistricts);
 router.get('/batch',  adminView.getBatchData);
-router.get('/tables',isAuthenticatedAdmin,adminView.getAllTables)
-router.post('/admin_login',adminView.loginadmin)
+router.get('/tables', isAuthenticatedAdmin,adminView.getAllTables);
+router.get('/table/:tableName', adminView.getTheTable);
+router.post('/save-table/:tableName', adminView.saveTheTable);
+
+router.post('/admin_login',adminView.loginadmin);
 
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const pool = require("../config/db1")
+const pool = require("../config/db1");
 
 exports.importCSV = async (req, res) => {
   if (!req.file) {

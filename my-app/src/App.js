@@ -19,7 +19,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/check-auth')
+    axios.get('http://3.110.77.175:3000/check-auth')
       .then(response => {
         setIsAuthenticated(response.data.isAuthenticated);
         console.log("isAuthenticated: "+response.data.isAuthenticated);
@@ -33,7 +33,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/check-admin')
+    axios.get('http://3.110.77.175:3000/check-admin')
       .then(response => {
         setIsAdminAuthenticated(response.data.isAdminAuthenticated);
         console.log(response.data.isAdminAuthenticated);

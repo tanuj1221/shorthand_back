@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import '../App.css'
-
+import * as XLSX from 'xlsx';
 const UpdateTable = () => {
     const [data, setData] = useState([]);
     const [selectedVal, setSelectedVal] = useState('');
@@ -34,6 +34,26 @@ const UpdateTable = () => {
         return Object.keys(data[0]).map(key => (
             <th key={key}>{key.toUpperCase()}</th>
         ));
+    };
+    const downloadExcel = () => {
+        // Ensure there is data to export
+        if (data.length === 0) {
+            alert("No data to download!");
+            return;
+        }
+    
+        // Create a new workbook and worksheet
+        const workbook = XLSX.utils.book_new();
+        const worksheet = XLSX.utils.json_to_sheet(data);
+    
+        // Add the worksheet to the workbook under the name "Data"
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+    
+        // Define a file name
+        const fileName = `${selectedVal}_data.xlsx`;
+    
+        // Trigger the file download
+        XLSX.writeFile(workbook, fileName);
     };
 
     const renderTableRows = () => {
@@ -108,6 +128,7 @@ const UpdateTable = () => {
             <div>
                 <button onClick={handleSave}>Save</button>
                 <button onClick={handleReset}>Reset</button>
+                <button onClick={downloadExcel}>Download Excel</button>
             </div>
         </div>
     );

@@ -136,7 +136,7 @@ def compare_text():
     print(result)
 
     # Now send the data to the Node.js API
-    api_url = 'http://3.110.77.175:3000/save-data'  # Replace with the actual URL of your Node.js API
+    api_url = 'http://15.206.159.230:3000/save-data'  # Replace with the actual URL of your Node.js API
     api_data = {
         'original': original,
         'answer': answer,

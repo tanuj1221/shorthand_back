@@ -13,7 +13,7 @@ function AdminLoginComponent({ setIsAdminAuthenticated  }) {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://3.110.77.175:3000/admin_login/', {
+      const response = await axios.post('http://15.206.159.230:3000/admin_login/', {
         userId: instituteId,
         password: password
       });

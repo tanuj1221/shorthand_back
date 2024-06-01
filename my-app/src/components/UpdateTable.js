@@ -42,20 +42,40 @@ const UpdateTable = () => {
             return;
         }
     
-        // Create a new workbook and worksheet
-        const workbook = XLSX.utils.book_new();
-        const worksheet = XLSX.utils.json_to_sheet(data);
+        // Get the header row
+        const headers = Object.keys(data[0]);
     
-        // Add the worksheet to the workbook under the name "Data"
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+        // Create the CSV content
+        let csvContent = headers.join(",") + "\n"; // Add the header row
+    
+        // Add the data rows
+        data.forEach((row) => {
+            const rowValues = headers.map((header) => {
+                let value = row[header] || "";
+                value = value.toString().replace(/,/g, ""); // Escape commas within values
+                return value;
+            });
+            csvContent += rowValues.join(",") + "\n";
+        });
+    
+        // Create a blob with the CSV content
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     
         // Define a file name
-        const fileName = `${selectedVal}_data.xlsx`;
+        const fileName = `${selectedVal}_data.csv`;
     
-        // Trigger the file download
-        XLSX.writeFile(workbook, fileName);
+        // Create a temporary link and click it to initiate the download
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", fileName);
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     };
-
     const renderTableRows = () => {
         return data.map((row, index) => (
             <tr key={index}>

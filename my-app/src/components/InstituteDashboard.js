@@ -11,7 +11,7 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
   const [instituteName, setInstituteName] = useState('Loading Institute...'); // Initial placeholder
   const [instituteId, setInstituteId] = useState('Loading ID');
   const navigate = useNavigate();
-  fetch('http://15.206.160.1:3000/institutedetails', {
+  fetch('http://localhost:3000/institutedetails', {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -37,7 +37,7 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
   const handleLogout = async () => {
     try {
       // Send a request to the backend to destroy the session
-      await axios.post('http://15.206.160.1:3000/logoutinsti');
+      await axios.post('http://localhost:3000/logoutinsti');
 
       setIsAuthenticated(false);
       // Redirect to the login page
@@ -90,6 +90,11 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
               <span>Pay fees</span>
             </Link>
           </li>
+          <li className="nav-link" onClick={closeSidebar}>
+  <a href="https://shorthandbucket.s3.ap-south-1.amazonaws.com/publish/publish.htm" target="_blank" rel="noopener noreferrer">
+    <span>Download demo</span>
+  </a>
+</li>
         </ul>
         <div className="nav-link">
           <div className="menu-container">

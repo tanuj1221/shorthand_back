@@ -30,7 +30,7 @@ const PayStudentList = () => {
     // Function to fetch students from the backend
     const fetchStudents = async () => {
         try {
-            const response = await axios.get('http://15.206.160.1:3000/paystudents');
+            const response = await axios.get('http://localhost:3000/paystudents');
             setStudents(response.data);
         } catch (error) {
             console.error('Failed to fetch students:', error);
@@ -100,11 +100,11 @@ const PayStudentList = () => {
 
     const handlePayment = async (userInfo) => {
         setShowModal(false); // Close the modal
-        const amount = selectedStudents.size * 5; // Calculate total amount
+        const amount = selectedStudents.size * 50; // Calculate total amount
         let order; // To store order details
 
         try {
-            const orderResponse = await axios.post('http://15.206.160.1:3000/createOrder', { amount });
+            const orderResponse = await axios.post('http://localhost:3000/createOrder', { amount });
             order = orderResponse.data; // Store order data
 
             if (!window.Razorpay) {
@@ -125,7 +125,7 @@ const PayStudentList = () => {
                 order_id: order.id,
                 handler: async (response) => {
                     const studentIds = Array.from(selectedStudents);
-                    const verificationResponse = await axios.post('http://15.206.160.1:3000/verifyPayment', {
+                    const verificationResponse = await axios.post('http://localhost:3000/verifyPayment', {
                         razorpay_order_id: order.id,
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
@@ -170,7 +170,7 @@ const PayStudentList = () => {
         // Confirm before deletion
         if (window.confirm("Are you sure you want to delete this student?")) {
             try {
-                await axios.delete(`http://15.206.160.1:3000/studentsdel/${studentId}`);
+                await axios.delete(`http://localhost:3000/studentsdel/${studentId}`);
                 fetchStudents(); // Refresh the student list after deletion
                 alert('Student deleted successfully');
             } catch (error) {
@@ -301,7 +301,7 @@ const PayStudentList = () => {
                     disabled={selectedStudents.size === 0}
                     style={selectedStudents.size === 0 ? buttonDisabledStyle : buttonStyle}
                 >
-                    Pay ₹{selectedStudents.size * 5}
+                    Pay ₹{selectedStudents.size * 50}
                 </button>
                 <PaymentModal
                     isOpen={showModal}

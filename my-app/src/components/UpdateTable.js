@@ -15,7 +15,7 @@ const UpdateTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/table/${selectedVal}`);
+                const response = await axios.get(`http://15.206.160.1:3000/table/${selectedVal}`);
                 setData(response.data);
                 setOriginalData(response.data);
             } catch (error) {
@@ -110,7 +110,7 @@ const UpdateTable = () => {
         try {
             // Make a POST request to save the updated data to the database
             console.log("data: "+data);
-            await axios.post(`http://localhost:3000/save-table/${selectedVal}`, data);
+            await axios.post(`http://15.206.160.1:3000/save-table/${selectedVal}`, data);
 
             console.log('Data saved successfullyy!');
             alert("Data saved!");

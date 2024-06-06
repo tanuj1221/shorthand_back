@@ -11,6 +11,11 @@ import EditStudentForm from './components/EditStudentForm';
 import Dashboard from './components/Dashboard';
 import AdminLoginComponent from './components/AdminLoginComponent';
 import AdminDashboard from './components/AdminDashboard';
+
+import ContactUs from './components/ContactUs';
+import Policy from './components/Policy';
+import Terms from './components/Terms';
+import Refund from './components/Refund';
 axios.defaults.withCredentials = true;
 
 const App = () => {
@@ -56,6 +61,11 @@ const App = () => {
     <Router>
       <Routes>
       /*<Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/admin_login" />} />*/
+      
+    <Route path="/refund-policy" element={<Refund />} />
+    <Route path="/contact-us" element={<ContactUs />} />
+    <Route path="/terms" element={<Terms />} />
+    <Route path="/policy" element={<Policy />} />
       <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <AdminDashboard />} />
        <Route path="/admin_login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />

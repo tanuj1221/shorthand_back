@@ -303,6 +303,10 @@ const PayStudentList = () => {
                 >
                     Pay ₹{selectedStudents.size * 50}
                 </button>
+                <div className="refund-policy">
+                <a href="http://15.206.160.1:3000/#/refund-policy">View Refund Policy</a>
+       
+            </div>
                 <PaymentModal
                     isOpen={showModal}
                     onClose={() => setShowModal(false)}
@@ -310,6 +314,7 @@ const PayStudentList = () => {
                     userInfo={userInfo}
                     setUserInfo={setUserInfo}
                 />
+
 
             </div>
         </div>

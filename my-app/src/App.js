@@ -75,6 +75,7 @@ const App = () => {
           <Route path="registration" element={<StudentForm />} />
           <Route path="paystudents" element={<PayStudentList />} />
           <Route path="overview" element={<Dashboard/>}></Route>
+          <Route path="refund-policy" element={<Refund />} />
           <Route path="edit-student/:id" element={<EditStudentForm />} />
         </Route>  
       </Routes>

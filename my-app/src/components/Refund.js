@@ -33,6 +33,8 @@ function Refund() {
     <div style={styles.refundPolicy}>
       <h1 style={styles.h1}>Refund/Cancellation Policy</h1>
       <p style={styles.p}>Amount once paid is not refundable / not transferable / non-cancellable.</p>
+      <p style={styles.p}>Refunds are typically processed within 5-7 working days from the date the request is received and approved.</p>
+
       <p style={styles.p}>Shipping and Exchange.</p>
       <p style={styles.p}>Instant delivery by website. Amount once paid is non-refundable and non-transferable.</p>
     </div>

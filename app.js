@@ -100,6 +100,45 @@ app.post('/verifyPayment', async (req, res) => {
   }
 });
 
+
+app.post('/verifyPayment1', async (req, res) => {
+  try {
+    const {
+      userInfo,  // User information received
+      students,
+  // Array of student IDs
+      utr        // UTR number for the transaction
+    } = req.body;
+
+    // Update the payment status for all selected students to 'waiting'
+    const updateQuery = "UPDATE student14 SET amount = 'paid' WHERE student_id IN (?)";
+    await connection.query(updateQuery, [students]);
+
+
+    // Save details to the qr_pay table
+    const now = new Date();
+    const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours and 30 minutes in milliseconds
+    const istDate = new Date(now.getTime() + istOffset);
+    const currentDate = istDate.toISOString().slice(0, 19).replace('T', ' ');
+    const insertQuery = `INSERT INTO qrpay (student_id, user, mobile, email, utr, date) VALUES ?`;
+    const values = students.map(studentId => [
+        studentId,
+        userInfo.name,
+        userInfo.contact,
+        userInfo.email,
+        utr,
+        currentDate
+    ]);
+    await connection.query(insertQuery, [values]);
+    console.log('done')
+
+    res.json({ success: true, message: 'Payment recorded and student records updated.' });
+  } catch (error) {
+    console.error('Payment recording failed:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Enable CORS with default options (accept requests from any origin)
 
 

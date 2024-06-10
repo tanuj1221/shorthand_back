@@ -87,7 +87,7 @@ exports.loginadmin= async (req, res) => {
 
 exports.getTheTable = async (req, res) => {
     try {
-        const validTables = ['student14', 'admindb', 'audiodb1', 'batch', 'coursesdb1', 'institutedb', 'savedata', 'subjectsdb'];
+        const validTables = ['student14', 'admindb', 'audiodb1', 'batch', 'coursesdb1', 'institutedb', 'savedata', 'subjectsdb','qrpay'];
         const tableName = req.params.tableName;
 
         if(!validTables.includes(tableName)){

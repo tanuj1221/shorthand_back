@@ -13,7 +13,22 @@
     z-index: 1000;
     border: 1px solid #e1e1e1; /* subtle border */
 }
+.qr-code {
+    width: 100%;       /* Adjust width to fit the container */
+    max-width: 200px;  /* Maximum width */
+    height: auto;      /* Maintain aspect ratio */
+    display: block;    /* Display block to remove bottom space/gap */
+    margin: 0 auto;    /* Center align the image */
+}
 
+/* Add this to your CSS file */
+.qr-code-section img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 .modal h2 {
     color: #333; /* Dark grey color for the heading */
     margin-bottom: 30px; /* More space below the heading */

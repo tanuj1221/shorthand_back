@@ -1,0 +1,92 @@
+  
+  .container {
+    width: 80%;
+    background: #ffffff;
+    box-shadow: 9px 9px 16px #d9d9d9, -9px -9px 16px #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #4a4a4a;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table thead {
+    background-color: #e0e0e0;
+  }
+  
+  table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+  
+  table th {
+    color: #4a4a4a;
+  }
+  
+  table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  table tbody tr td {
+    color: #4a4a4a;
+  }
+  
+  button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #357abd;
+  }
+  
+  input[type="checkbox"] {
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+  
+    table thead {
+      display: none;
+    }
+  
+    table tbody tr {
+      margin-bottom: 10px;
+      border: none;
+    }
+  
+    table tbody tr td {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+  
+    table tbody tr td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #4a4a4a;
+    }
+  }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../admin-loginStudentApprove.css';
 
 function WaitingStudents() {
   const [students, setStudents] = useState([]);

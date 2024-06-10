@@ -118,7 +118,7 @@ const PayStudentList = () => {
     
             // Check response to verify if the payment was initiated successfully
             if (response.data.success) {
-                alert('QR Payment initiated successfully. Waiting for approval.');
+                alert('QR Payment initiated successfully. Payment will approved in 24-48 Hrs.');
                 setSelectedStudents(new Set()); // Clear selected students
                 fetchStudents(); // Refresh the student list
             } else {

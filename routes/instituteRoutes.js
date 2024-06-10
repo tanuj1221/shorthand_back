@@ -20,7 +20,7 @@ router.delete('/studentsdel/:id',isAuthenticatedInsti, instituteController.delet
 router.delete('/deletetable/:tableName', async (req, res) => {
     const tableName = req.params.tableName;
     // Prevent SQL injection by validating the table name against a list of known good table names
-    const allowedTables = ['student14', 'subjectsDb','audiodb1','savedata']; // Define allowed tables
+    const allowedTables = ['student14', 'subjectsDb','audiodb1','savedata','qrpay']; // Define allowed tables
 
     if (!allowedTables.includes(tableName)) {
         return res.status(400).send('Invalid table name');

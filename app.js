@@ -106,12 +106,13 @@ app.post('/verifyPayment1', async (req, res) => {
     const {
       userInfo,  // User information received
       students,
+      amount,
   // Array of student IDs
       utr        // UTR number for the transaction
     } = req.body;
 
     // Update the payment status for all selected students to 'waiting'
-    const updateQuery = "UPDATE student14 SET amount = 'paid' WHERE student_id IN (?)";
+    const updateQuery = "UPDATE student14 SET amount = 'waiting' WHERE student_id IN (?)";
     await connection.query(updateQuery, [students]);
 
 
@@ -120,14 +121,15 @@ app.post('/verifyPayment1', async (req, res) => {
     const istOffset = 5.5 * 60 * 60 * 1000; // 5 hours and 30 minutes in milliseconds
     const istDate = new Date(now.getTime() + istOffset);
     const currentDate = istDate.toISOString().slice(0, 19).replace('T', ' ');
-    const insertQuery = `INSERT INTO qrpay (student_id, user, mobile, email, utr, date) VALUES ?`;
+    const insertQuery = `INSERT INTO qrpay (student_id, user, mobile, email, utr, date,amount) VALUES ?`;
     const values = students.map(studentId => [
         studentId,
         userInfo.name,
         userInfo.contact,
         userInfo.email,
         utr,
-        currentDate
+        currentDate,
+        amount
     ]);
     await connection.query(insertQuery, [values]);
     console.log('done')

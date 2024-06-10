@@ -45,7 +45,7 @@ const PaymentQr = ({ isOpen, onClose, onSubmit, userInfo, setUserInfo, totalAmou
           name="utr"
           value={userInfo.utr}
           onChange={handleChange}
-          placeholder="Enter UTR Number"
+          placeholder="Enter UTR/UPI transaction Id Number"
           className="input"
         />
         <button className="button" onClick={() => onSubmit(userInfo)}>Payment Done</button>

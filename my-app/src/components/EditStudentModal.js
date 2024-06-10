@@ -45,7 +45,7 @@ const EditStudentModal = ({ isOpen, onClose, student, onSubmit }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Ensure this URL matches your Express route for updating a student
-        const updateUrl = `http://localhost:3000/students/edit/${student.student_id}`;
+        const updateUrl = `http://15.206.160.1 :3000/students/edit/${student.student_id}`;
         try {
             const response = await axios.put(updateUrl, formData);
             alert('Student updated successfully!');

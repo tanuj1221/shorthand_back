@@ -9,7 +9,7 @@ function TablesList() {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const response = await axios.get('http://15.206.160.1 :3000/tables', {
+        const response = await axios.get('http://15.206.160.1:3000/tables', {
           // Make sure to include the appropriate headers or authentication tokens
           headers: {
             Authorization: 'Bearer your-auth-token' // Adjust based on your authentication method

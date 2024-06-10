@@ -12,6 +12,8 @@ router.get('/table/:tableName', adminView.getTheTable);
 router.post('/save-table/:tableName', adminView.saveTheTable);
 
 router.post('/admin_login',adminView.loginadmin);
-
+router.get('/approve', adminView.getAllWaitingStudents);
+router.post('/approved_student', adminView.approveStudent);
 
 module.exports = router;
+

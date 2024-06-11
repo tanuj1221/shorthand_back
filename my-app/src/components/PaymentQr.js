@@ -1,6 +1,6 @@
 import '../paymentmodal.css'; // Assuming your CSS file is named PaymentModal.css and is in the same directory
 import qr from '../images/qr.jpg';
-import React, { useState } from 'react'; // Import useState if not already imported
+import React, { useState } from 'react';
 
 const PaymentQr = ({ isOpen, onClose, onSubmit, userInfo, setUserInfo, totalAmount }) => {
     const [error, setError] = useState('');
@@ -10,13 +10,26 @@ const PaymentQr = ({ isOpen, onClose, onSubmit, userInfo, setUserInfo, totalAmou
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Validate UTR to ensure it's numeric
-        if (name === 'utr' && /[^0-9]/.test(value)) {
-            setError('Please enter a correct UTR/UPI transaction ID (only numbers allowed)');
+        // Validate UTR to ensure it's numeric and at least 11 digits long
+        if (name === 'utr' && (!/^\d{11,}$/.test(value))) {
+            setError('Please enter a valid UTR/UPI transaction ID (at least 11 digits).');
         } else {
             setError(''); // Clear error if the current input is valid
             setUserInfo({ ...userInfo, [name]: value });
         }
+    };
+
+    const handleSubmit = () => {
+        if (!userInfo.name || !userInfo.email || !userInfo.contact || !userInfo.utr) {
+            setError('All fields are required.');
+            return;
+        }
+        if (!/^\d{11,}$/.test(userInfo.utr)) {
+            setError('Please enter a valid UTR/UPI transaction ID (at least 11 digits).');
+            return;
+        }
+        setError('');
+        onSubmit(userInfo);
     };
 
     return (
@@ -61,7 +74,7 @@ const PaymentQr = ({ isOpen, onClose, onSubmit, userInfo, setUserInfo, totalAmou
           className="input"
         />
         {error && <p className="error-message">{error}</p>}
-        <button className="button" onClick={() => onSubmit(userInfo)}>Payment Done</button>
+        <button className="button" onClick={handleSubmit}>Payment Done</button>
         <button className="button cancel" onClick={onClose}>Cancel</button>
       </div>
     );

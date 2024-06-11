@@ -190,3 +190,32 @@ exports.approveStudent = async (req, res) => {
       res.status(500).send(err.message);
     }
   };
+
+
+
+  exports.rejectStudent = async (req, res) => {
+    const { student_id } = req.body;
+  
+    if (!student_id) {
+      return res.status(400).send('Student ID is required');
+    }
+  
+    try {
+      const updateQuery = `
+        UPDATE student14
+        SET amount = 'pending'
+        WHERE student_id = ? AND amount = 'waiting';
+      `;
+  
+      const [result] = await connection.query(updateQuery, [student_id]);
+  
+      if (result.affectedRows > 0) {
+        res.send({ message: 'Student approved successfully', studentId: student_id });
+      } else {
+        res.status(404).send('Student not found or was not in waiting status');
+      }
+    } catch (err) {
+      console.log('Error approving student:', err);
+      res.status(500).send(err.message);
+    }
+  };

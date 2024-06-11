@@ -1,12 +1,24 @@
 import '../paymentmodal.css'; // Assuming your CSS file is named PaymentModal.css and is in the same directory
 import qr from '../images/qr.jpg';
+import React, { useState } from 'react'; // Import useState if not already imported
+
 const PaymentQr = ({ isOpen, onClose, onSubmit, userInfo, setUserInfo, totalAmount }) => {
+    const [error, setError] = useState('');
+
     if (!isOpen) return null;
-  
+
     const handleChange = (e) => {
-      setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        // Validate UTR to ensure it's numeric
+        if (name === 'utr' && /[^0-9]/.test(value)) {
+            setError('Please enter a correct UTR/UPI transaction ID (only numbers allowed)');
+        } else {
+            setError(''); // Clear error if the current input is valid
+            setUserInfo({ ...userInfo, [name]: value });
+        }
     };
-  
+
     return (
       <div className="modal">
         <h2>Enter Payment Details</h2>
@@ -48,10 +60,11 @@ const PaymentQr = ({ isOpen, onClose, onSubmit, userInfo, setUserInfo, totalAmou
           placeholder="Enter UTR/UPI transaction Id Number"
           className="input"
         />
+        {error && <p className="error-message">{error}</p>}
         <button className="button" onClick={() => onSubmit(userInfo)}>Payment Done</button>
         <button className="button cancel" onClick={onClose}>Cancel</button>
       </div>
     );
-  };
-  
-  export default PaymentQr;
+};
+
+export default PaymentQr;

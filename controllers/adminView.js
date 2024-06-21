@@ -210,7 +210,7 @@ exports.approveStudent = async (req, res) => {
       const [result] = await connection.query(updateQuery, [student_id]);
   
       if (result.affectedRows > 0) {
-        res.send({ message: 'Student approved successfully', studentId: student_id });
+        res.send({ message: 'Student rejected successfully', studentId: student_id });
       } else {
         res.status(404).send('Student not found or was not in waiting status');
       }

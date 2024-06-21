@@ -24,7 +24,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://15.206.160.1:3000/check-auth')
+    axios.get('http://13.234.111.187:3000/check-auth')
       .then(response => {
         setIsAuthenticated(response.data.isAuthenticated);
         console.log("isAuthenticated: "+response.data.isAuthenticated);
@@ -38,7 +38,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('http://15.206.160.1:3000/check-admin')
+    axios.get('http://13.234.111.187:3000/check-admin')
       .then(response => {
         setIsAdminAuthenticated(response.data.isAdminAuthenticated);
         console.log(response.data.isAdminAuthenticated);

@@ -7,7 +7,7 @@ function WaitingStudents() {
 
   // Fetch students on component mount
   useEffect(() => {
-    fetch('http://13.234.111.187:3000/approve') // Ensure this URL matches your actual API endpoint
+    fetch('http://65.0.31.147:3000/approve') // Ensure this URL matches your actual API endpoint
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);
@@ -31,7 +31,7 @@ function WaitingStudents() {
     };
   
     // Make the fetch request to the backend
-    fetch('http://13.234.111.187:3000/approved_student', options)
+    fetch('http://65.0.31.147:3000/approved_student', options)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);
@@ -61,7 +61,7 @@ function WaitingStudents() {
     };
 
     // Make the fetch request to the backend
-    fetch('http://13.234.111.187:3000/rejected_student', options)
+    fetch('http://65.0.31.147:3000/rejected_student', options)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);

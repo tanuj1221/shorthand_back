@@ -11,11 +11,17 @@ exports.loginStudent = async (req, res) => {
   const { userId, password } = req.body;
 
   const query1 = 'SELECT * FROM student14 WHERE student_id = ?';
+  console.log(`Entered User ID: ${userId}`);
+  console.log(`Entered Password: ${password}`);
 
   try {
       const [results] = await connection.query(query1, [userId]);
+      console.log('Query executed, results:', results); // Add this line to see the results returned by the query
+      
       if (results.length > 0) {
           const student = results[0];
+          console.log(`Stored student ID: ${student.student_id}`);
+          console.log(`Stored password: ${student.password}`);
 
           if (student.password === password) {
               // Set student session

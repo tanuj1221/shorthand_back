@@ -7,11 +7,7 @@ const csvController = require('../controllers/dataInput');
 const upload = multer({ dest: 'uploads/' });
 
 
-router.post('/api/import-csv/:tableName', upload.single('csvFilePath'), csvController.importCSV);
-
-
-  
-  
+router.post('/import-csv/:tableName', upload.single('csvFilePath'), csvController.importCSV);
 
 module.exports = router;
 

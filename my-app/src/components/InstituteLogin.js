@@ -13,7 +13,7 @@ function InstituteLogin({ setIsAuthenticated }) {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://65.0.31.147:3000/login_institute/', {
+      const response = await axios.post('http://localhost:3000/login_institute/', {
         userId: instituteId,  // Make sure `instituteId` is correctly defined and passed
         password: password    // Make sure `password` is correctly defined and passed
       });

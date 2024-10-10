@@ -11,12 +11,12 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
   const [instituteName, setInstituteName] = useState('Loading Institute...'); // Initial placeholder
   const [instituteId, setInstituteId] = useState('Loading ID');
   const navigate = useNavigate();
-  fetch('http://65.0.31.147:3000/institutedetails', {
+  fetch('http://localhost:3000/institutedetails', {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json'
-    }
+    },
+    credentials: 'include'
   })
   .then(response => {
     if (!response.ok) {
@@ -37,7 +37,7 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
   const handleLogout = async () => {
     try {
       // Send a request to the backend to destroy the session
-      await axios.post('http://65.0.31.147:3000/logoutinsti');
+      await axios.post('http://localhost:3000/logoutinsti');
 
       setIsAuthenticated(false);
       // Redirect to the login page

@@ -1,0 +1,18 @@
+subjectId,courseId,subject_name,subject_name_short,Daily_Timer,Passage_Timer,Demo_Timer
+101,11,Shorthand Dummy Subject,Dummy,85,32,75
+50,11,English Shorthand 60 wpm,E-60,85,32,75
+51,11,English Shorthand 80 wpm,E-80,100,40,90
+52,11,English Shorthand 100 wpm,E-100,115,47,105
+53,11,English Shorthand 120 wpm,E-120,130,55,120
+54,11,English Shorthand 130 wpm,E-130,130,55,120
+55,11,English Shorthand 140 wpm,E-140,135,57,125
+56,11,English Shorthand 150 wpm,E-150,140,60,130
+57,11,English Shorthand 160 wpm,E-160,145,62,135
+60,11,Marathi Shorthand 60 wpm,M-60,85,32,75
+61,11,Marathi Shorthand 80 wpm,M-80,100,40,90
+62,11,Marathi Shorthand 100 wpm,M-100,115,47,105
+63,11,Marathi Shorthand 120 wpm,M-120,130,55,120
+70,11,Hindi Shorthand 60 wpm,H-60,85,32,75
+71,11,Hindi Shorthand 80 wpm,H-80,100,40,90
+72,11,Hindi Shorthand 100 wpm,H-100,115,47,105
+73,11,Hindi Shorthand 120 wpm,H-120,130,55,120

@@ -209,18 +209,18 @@ function StudentForm() {
     setStudentDetails({ ...studentDetails, [e.target.name]: e.target.value });
   };
 
-const formStyle = {
-  display: 'grid',
-  gridTemplateColumns: isExtraNarrowScreen ? 'repeat(2, 1fr)' : isNarrowScreen ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-  gap: '10px',
-  alignItems: 'center',
-  maxWidth: '1500px',
-  margin: '0 auto',
-  padding: isExtraNarrowScreen ? '10px' : isNarrowScreen ? '20px' : '40px',
-  backgroundColor: '#f7f7f7',
-  borderRadius: '10px',
-  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-};
+  const formStyle = {
+    display: 'grid',
+    gridTemplateColumns: isExtraNarrowScreen ? 'repeat(2, 1fr)' : isNarrowScreen ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+    gap: '10px',
+    alignItems: 'center',
+    maxWidth: '1500px',
+    margin: '0 auto',
+    padding: isExtraNarrowScreen ? '10px' : isNarrowScreen ? '20px' : '40px',
+    backgroundColor: '#f7f7f7',
+    borderRadius: '10px',
+    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+  };
 
   
   const formGroupStyle = {
@@ -293,11 +293,11 @@ const formStyle = {
   };
   
   const imagePreviewStyle = {
-    marginTop: '10px', // Add space between the input and the preview
-    maxWidth: '100%', // Ensure it's not larger than the container
-    height: 'auto', // Maintain aspect ratio
-    borderRadius: '4px', // Slightly rounded corners for the preview image
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow for some depth
+    marginTop: '10px',
+    maxWidth: '200px', // Set a fixed max-width
+    height: 'auto',
+    borderRadius: '4px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
   };
   
   const headingStyle = {
@@ -344,6 +344,23 @@ const formStyle = {
   const subjectStyle = {
     fontSize: isVeryNarrowScreen ? '10px' : '16px'// Smaller font size for very narrow screens
   }
+
+  const fileInputContainerStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    gridColumn: '1 / -1', // Span across all columns
+  };
+  
+  const fileInputWrapperStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: '10px',
+  };
+
 
 
   return (
@@ -432,23 +449,28 @@ const formStyle = {
               </div>
             </div>
 
-            <div style={formGroupStyle}>
-            <label style={labelStyle}>Upload Photo(20-50 kb size)</label>
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}  
-              style={fileInputStyle}
-              required
-            />
+            
+            <div style={fileInputContainerStyle}>
+          <div style={formGroupStyle}>
+            <label style={{...labelStyle, textAlign: 'center'}}>Upload Photo (20-50 kb size)</label>
+            <div style={fileInputWrapperStyle}>
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}  
+                style={{...fileInputStyle, margin: '10px 0'}}
+                required
+              />
+            </div>
             {imagePreview && (
-              <div>
+              <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
                 <img src={imagePreview} alt="Preview" style={imagePreviewStyle} />
               </div>
             )}
           </div>
-          </div>
+        </div>
+        </div>
 
         <button type="submit" style={buttonStyle}>Submit</button>
       </form>

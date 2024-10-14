@@ -23,9 +23,12 @@ const EditStudentForm = () => {
   const [batchInfo, setBatchInfo] = useState({});
   const [imagePreview, setImagePreview] = useState(null);
 
+
+
+  
   useEffect(() => {
     if (studentId) {
-      axios.get(`http://65.0.31.147 :3000/students/details/${studentId}`)
+      axios.get(`http://localhost:3000/students/details/${studentId}`)
         .then(response => {
           const studentData = response.data;
           setStudentDetails(studentData);
@@ -46,7 +49,7 @@ const EditStudentForm = () => {
   useEffect(() => {
     // Fetch batch years independently as it doesn't depend on student details
     const fetchBatchInfo = async () => {
-      const result = await axios('http://65.0.31.147 :3000/batch');
+      const result = await axios('http://localhost:3000/batch');
       setBatchYears(result.data.map(batch => batch.batch_year));
     };
     fetchBatchInfo();
@@ -58,7 +61,7 @@ const EditStudentForm = () => {
     if (selectedYear) {
       const fetchSemesters = async () => {
         try {
-          const result = await axios(`http://65.0.31.147 :3000/batch?batch_year=${selectedYear}`);
+          const result = await axios(`http://localhost:3000/batch?batch_year=${selectedYear}`);
           setSemesters(result.data);
           // Set semester here might not be correct if studentDetails isn't ready yet
         } catch (error) {
@@ -105,7 +108,7 @@ const EditStudentForm = () => {
     };
   
     try {
-      const response = await axios.put(`http://65.0.31.147 :3000/students/${studentId}`, updatedStudentDetails);
+      const response = await axios.put(`http://localhost:3000/students/${studentId}`, updatedStudentDetails);
       alert('Student updated successfully!');
       console.log(response.data);
     } catch (error) {
@@ -274,11 +277,11 @@ const EditStudentForm = () => {
     };
     
     const imagePreviewStyle = {
-      marginTop: '10px', // Add space between the input and the preview
-      maxWidth: '100%', // Ensure it's not larger than the container
-      height: 'auto', // Maintain aspect ratio
-      borderRadius: '4px', // Slightly rounded corners for the preview image
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Subtle shadow for some depth
+      marginTop: '10px',
+      maxWidth: '40%', // Reduced by 20% from the previous 60%
+      height: 'auto',
+      borderRadius: '4px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     };
     
     const headingStyle = {
@@ -301,16 +304,26 @@ const EditStudentForm = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center', // Ensures content inside is also centered
-      width: '100%', // Use 100% width of the form container
-      maxWidth: '1200px', // Adjust width as needed to fit the design
-      margin: '20px auto', // Auto margins for horizontal centering
+      justifyContent: 'center',
+      width: '100%', // Changed from 50% to 100%
+      maxWidth: '600px', // Adjusted for better centering
+      margin: '10px auto',
       padding: '20px',
       backgroundColor: '#e9ecef',
       borderRadius: '8px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      gridColumn: '1 / -1', // Span across all columns in the grid
+      gridColumn: '1 / -1',
     };
+
+    const fileInputContainerStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+    };
+
+
+
 
   return (
     <div>
@@ -353,72 +366,47 @@ const EditStudentForm = () => {
         </div>
 
 
-        <div style={formGroupStyle}>
-            <label style={labelStyle}>Mobile No:</label>
-            <input
-              type="tel"
-              name="mobile_no"
-              value={studentDetails.mobile_no}
-              onChange={handleChange}
-              required
-              pattern="[0-9]{10}"
-              title="Please enter a 10-digit mobile number"
-              style={inputStyle}
-            />
-          </div>
 
-          <div style={formGroupStyle}>
-            <label style={labelStyle}>Email:</label>
+        <div style={stackGroupStyle}>
+          <div style={fileInputContainerStyle}>
+            <label style={labelStyle}>Upload Photo (20-50 KB size)</label>
             <input
-              type="email"
-              name="email"
-              value={studentDetails.email}
-              onChange={handleChange}
-              required
-              style={inputStyle}
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={fileInputStyle}
             />
-          </div>
-
-          <div style={stackGroupStyle}>
-            <div style={formGroupStyle}>
-              <label style={labelStyle}>Upload Photo (20-50 KB size)</label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={fileInputStyle}
-              />
-              {imagePreview ? (
-                <div>
-                  <img src={imagePreview} alt="Preview" style={imagePreviewStyle} />
-                  <div style={{
-                    display: 'flex', // Use flexbox to align items
-                    justifyContent: 'center', // Center horizontally in the flex container
-                    marginTop: '10px' // Add some space above this div
-                  }}>
-                    <button type="button" onClick={() => {
-                      setImagePreview(null);
-                      setStudentDetails(prevDetails => ({ ...prevDetails, image: '' }));
-                    }}
-                      style={{
-                        padding: '10px 20px', // Padding inside the button for better touch area
-                        backgroundColor: '#f44336', // A red color for the remove button, indicating a destructive action
-                        color: 'white', // White text color for contrast
-                        border: 'none', // No border
-                        borderRadius: '4px', // Rounded corners
-                        cursor: 'pointer', // Cursor indicates clickable area
-                        fontSize: '16px', // Font size for readability
-                      }}>
-                      Remove Image
-                    </button>
-                  </div>
+            {imagePreview ? (
+              <div style={{ textAlign: 'center' }}>
+                <img src={imagePreview} alt="Preview" style={imagePreviewStyle} />
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '10px'
+                }}>
+                  <button type="button" onClick={() => {
+                    setImagePreview(null);
+                    setStudentDetails(prevDetails => ({ ...prevDetails, image: '' }));
+                  }}
+                    style={{
+                      padding: '10px 20px',
+                      backgroundColor: '#f44336',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                    }}>
+                    Remove Image
+                  </button>
                 </div>
-              ) : (
-                <p>No image selected. Please upload an image.</p>
-              )}
-            </div>
+              </div>
+            ) : (
+              <p>No image selected. Please upload an image.</p>
+            )}
           </div>
+        </div>
 
         <button type="submit" style={buttonStyle}>Submit</button>
       </form>

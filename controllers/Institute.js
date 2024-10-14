@@ -397,7 +397,7 @@ exports.getStudentById = async (req, res) => {
       const studentQuery = `
         SELECT
           student_id, firstName, lastName, middleName, motherName,
-          mobile_no, email, batch_year, subjectsId
+          mobile_no, email, batch_year, subjectsId , image
         FROM
           student14
         WHERE

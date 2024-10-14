@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Pie } from 'react-chartjs-2';
-import 'chart.js/auto';  // Needed for Chart.js v3
+import 'chart.js/auto';
+import './Dashboard.css';
 
 function Dashboard() {
   const [students, setStudents] = useState([]);
@@ -11,16 +12,16 @@ function Dashboard() {
     labels: ['Paid', 'Pending'],
     datasets: [{
       label: 'Payment Status',
-      data: [0, 0],  // Initial data set to zero
+      data: [0, 0],
       backgroundColor: [
-        'rgba(75, 192, 192, 0.2)',  // Green for Paid
-        'rgba(255, 99, 132, 0.2)'   // Red for Pending
+        'rgba(75, 192, 192, 0.7)',
+        'rgba(255, 99, 132, 0.7)'
       ],
       borderColor: [
         'rgba(75, 192, 192, 1)',
         'rgba(255, 99, 132, 1)'
       ],
-      borderWidth: 1
+      borderWidth: 2
     }]
   });
 
@@ -50,29 +51,37 @@ function Dashboard() {
           label: 'Payment Status',
           data: [newPaidCount, newPendingCount],
           backgroundColor: [
-            'rgba(75, 192, 192, 0.2)',  // Green
-            'rgba(255, 99, 132, 0.2)',  // Red
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
           ],
           borderColor: [
             'rgba(75, 192, 192, 1)',
             'rgba(255, 99, 132, 1)',
           ],
-          borderWidth: 1,
+          borderWidth: 2,
         }]
       });
     }
-  }, [students]);  // Re-calculate when students data changes
+  }, [students]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <div style={{ width: '60%' }}>
-        <h1>Student Payment Status</h1>
-        <Pie data={chartData} />
-      </div>
-      <div style={{ width: '40%', padding: '20px', backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}>
-        <h2>Summary</h2>
-        <p><strong>Paid Students:</strong> {paidCount}</p>
-        <p><strong>Pending Students:</strong> {pendingCount}</p>
+    <div className="dashboard-container">
+      <h1 className="dashboard-title">Student Payment Status</h1>
+      <div className="dashboard-content">
+        <div className="chart-container">
+          <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+        </div>
+        <div className="summary-container">
+          <h2 className="summary-title">Summary</h2>
+          <div className="summary-item">
+            <span className="summary-label">Paid Students:</span>
+            <span className="summary-value paid">{paidCount}</span>
+          </div>
+          <div className="summary-item">
+            <span className="summary-label">Pending Students:</span>
+            <span className="summary-value pending">{pendingCount}</span>
+          </div>
+        </div>
       </div>
     </div>
   );

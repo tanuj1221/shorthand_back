@@ -1,0 +1,108 @@
+.dashboard-container {
+    font-family: 'Arial', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .chart-container {
+    flex: 1 1 60%;
+    min-width: 300px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary-container {
+    flex: 1 1 30%;
+    min-width: 250px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary-title {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .summary-label {
+    color: #555;
+  }
+  
+  .summary-value {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .summary-value.paid {
+    background-color: rgba(75, 192, 192, 0.2);
+    color: rgb(75, 192, 192);
+  }
+  
+  .summary-value.pending {
+    background-color: rgba(255, 99, 132, 0.2);
+    color: rgb(255, 99, 132);
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-container {
+      padding: 10px;
+    }
+  
+    .dashboard-title {
+      font-size: 2rem;
+    }
+  
+    .dashboard-content {
+      flex-direction: column;
+    }
+  
+    .chart-container, .summary-container {
+      width: 100%;
+    }
+  
+    .chart-container {
+      height: 300px;
+    }
+  
+    .summary-title {
+      font-size: 1.5rem;
+    }
+  
+    .summary-item {
+      font-size: 1rem;
+    }
+  }

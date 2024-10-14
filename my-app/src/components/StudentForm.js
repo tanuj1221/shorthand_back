@@ -390,12 +390,11 @@ const formStyle = {
         <div style={formGroupStyle}>
             <label style={labelStyle}>Mobile No:</label>
             <input
-              type="tel"
+              type="text"
               name="mobile_no"
               value={studentDetails.mobile_no}
               onChange={handleChange}
               required
-              pattern="[0-9]{10}"
               title="Please enter a 10-digit mobile number"
               style={inputStyle}
             />

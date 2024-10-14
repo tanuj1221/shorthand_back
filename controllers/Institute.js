@@ -115,6 +115,11 @@ exports.registerStudent = async (req, res) => {
       mobile_no,
       email,
     } = req.body;
+
+    console.log(req.body);
+    if(mobile_no.length != 10) {
+      return res.status(403).json({"message":"Mob_no should be 10 digits long"})
+    }
   
     const insertQuery =
       "INSERT INTO student14 (student_id, password, instituteId, firstName, lastName, motherName, middleName, subjectsId, courseId, batch_year, sem, batchStartDate, batchEndDate, amount, loggedIn, rem_time, done, image, mobile_no, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -173,52 +178,45 @@ exports.registerStudent = async (req, res) => {
 
 
 exports.updateStudent = async (req, res) => {
-  const studentId = req.params.studentId; // Extracting studentId from URL parameters
-  const {
-    firstName,
-    lastName,
-    motherName,
-    middleName,
-    batch_year,
-    sem,
-    image,
-    mobile_no,
-    email,
-  } = req.body; // Extracting all fields from the request body
+  const studentId = req.params.studentId;
+  const updateFields = req.body;
 
-  const updateQuery = `
-    UPDATE student14 
-    SET 
-      firstName = ?,
-      lastName = ?,
-      motherName = ?,
-      middleName = ?,
-      batch_year = ?,
-      sem = ?,
-      image = ?,
-      mobile_no = ?,
-      email = ?
-    WHERE student_id = ?;
-  `;
+  // Create dynamic query based on provided fields
+  let updateQuery = 'UPDATE student14 SET ';
+  const updateValues = [];
+  const allowedFields = [
+    'firstName', 'lastName', 'motherName', 'middleName', 
+    'batch_year', 'sem', 'image', 'mobile_no', 'email'
+  ];
+
+  for (const [key, value] of Object.entries(updateFields)) {
+    if (allowedFields.includes(key)) {
+      updateQuery += `${key} = ?, `;
+      updateValues.push(value);
+    }
+  }
+
+  // Remove trailing comma and space
+  updateQuery = updateQuery.slice(0, -2);
+  updateQuery += ' WHERE student_id = ?';
+  updateValues.push(studentId);
 
   try {
-    await connection.query(updateQuery, [
-      firstName,
-      lastName,
-      motherName,
-      middleName,
-      batch_year,
-      sem,
-      image,
-      mobile_no,
-      email,
-      studentId,
-      image
-    ]);
-    res.send('Student updated successfully');
+    // Check if there are fields to update
+    if (updateValues.length === 1) {
+      return res.status(400).json({ error: 'No valid fields provided for update' });
+    }
+
+    const [result] = await connection.query(updateQuery, updateValues);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Student not found' });
+    }
+
+    res.json({ message: 'Student updated successfully' });
   } catch (err) {
     console.error('Error updating student:', err);
-    res.status(500).send('Error updating student');
+    res.status(500).json({ error: 'Error updating student', details: err.message });
   }
 };
 
@@ -397,7 +395,7 @@ exports.getStudentById = async (req, res) => {
       const studentQuery = `
         SELECT
           student_id, firstName, lastName, middleName, motherName,
-          mobile_no, email, batch_year, subjectsId
+          mobile_no, email, batch_year, subjectsId , image
         FROM
           student14
         WHERE

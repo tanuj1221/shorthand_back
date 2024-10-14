@@ -348,6 +348,7 @@ const PayStudentList = () => {
             </div>
             {showModal && (
                 <PaymentModal
+                    isOpen={true}
                     userInfo={userInfo}
                     setUserInfo={setUserInfo}
                     onClose={() => setShowModal(false)}

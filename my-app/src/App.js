@@ -24,7 +24,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://13.235.95.5:3000/check-auth')
+    axios.get('http://shorthandexam.in/check-auth')
       .then(response => {
         setIsAuthenticated(response.data.isAuthenticated);
         console.log("isAuthenticated: "+response.data.isAuthenticated);
@@ -38,7 +38,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    axios.get('http://13.235.95.5:3000/check-admin')
+    axios.get('http://shorthandexam.in/check-admin')
       .then(response => {
         setIsAdminAuthenticated(response.data.isAdminAuthenticated);
         console.log(response.data.isAdminAuthenticated);

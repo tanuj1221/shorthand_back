@@ -32,7 +32,7 @@ const PayStudentList = () => {
     // Function to fetch students from the backend
     const fetchStudents = async () => {
         try {
-            const response = await axios.get('http://13.235.95.5:3000/paystudents');
+            const response = await axios.get('http://shorthandexam.in/paystudents');
             setStudents(response.data);
         } catch (error) {
             console.error('Failed to fetch students:', error);
@@ -109,7 +109,7 @@ const PayStudentList = () => {
     
         try {
             // Send POST request to initiate the payment
-            const response = await axios.post('http://13.235.95.5:3000/verifyPayment1', {
+            const response = await axios.post('http://shorthandexam.in/verifyPayment1', {
                 userInfo: userInfo, 
                 students: [...selectedStudents], 
                 amount: amount ,
@@ -138,7 +138,7 @@ const PayStudentList = () => {
         let order; // To store order details
 
         try {
-            const orderResponse = await axios.post('http://13.235.95.5:3000/createOrder', { amount });
+            const orderResponse = await axios.post('http://shorthandexam.in/createOrder', { amount });
             order = orderResponse.data; // Store order data
 
             if (!window.Razorpay) {
@@ -159,7 +159,7 @@ const PayStudentList = () => {
                 order_id: order.id,
                 handler: async (response) => {
                     const studentIds = Array.from(selectedStudents);
-                    const verificationResponse = await axios.post('http://13.235.95.5:3000/verifyPayment', {
+                    const verificationResponse = await axios.post('http://shorthandexam.in/verifyPayment', {
                         razorpay_order_id: order.id,
                         razorpay_payment_id: response.razorpay_payment_id,
                         razorpay_signature: response.razorpay_signature,
@@ -204,7 +204,7 @@ const PayStudentList = () => {
         // Confirm before deletion
         if (window.confirm("Are you sure you want to delete this student?")) {
             try {
-                await axios.delete(`http://13.235.95.5:3000/studentsdel/${studentId}`);
+                await axios.delete(`http://shorthandexam.in/studentsdel/${studentId}`);
                 fetchStudents(); // Refresh the student list after deletion
                 alert('Student deleted successfully');
             } catch (error) {
@@ -343,7 +343,7 @@ const PayStudentList = () => {
             </button>
 
                 <div className="refund-policy">
-                <a href="http://13.235.95.5:3000/#/refund-policy">View Refund Policy</a>
+                <a href="http://shorthandexam.in/#/refund-policy">View Refund Policy</a>
        
             </div>
             {showModal && (

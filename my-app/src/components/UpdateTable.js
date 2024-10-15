@@ -15,7 +15,7 @@ const UpdateTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://13.235.95.5:3000/table/${selectedVal}`);
+                const response = await axios.get(`http://shorthandexam.in/table/${selectedVal}`);
                 setData(response.data);
                 setOriginalData(response.data);
             } catch (error) {
@@ -110,7 +110,7 @@ const UpdateTable = () => {
         try {
             // Make a POST request to save the updated data to the database
             console.log("data: "+data);
-            await axios.post(`http://13.235.95.5:3000/save-table/${selectedVal}`, data);
+            await axios.post(`http://shorthandexam.in/save-table/${selectedVal}`, data);
 
             console.log('Data saved successfullyy!');
             alert("Data saved!");

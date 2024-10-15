@@ -11,7 +11,7 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
   const [instituteName, setInstituteName] = useState('Loading Institute...'); // Initial placeholder
   const [instituteId, setInstituteId] = useState('Loading ID');
   const navigate = useNavigate();
-  fetch('http://13.235.95.5:3000/institutedetails', {
+  fetch('http://shorthandexam.in/institutedetails', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ const InstituteDashboard = ({ setIsAuthenticated }) => {
   const handleLogout = async () => {
     try {
       // Send a request to the backend to destroy the session
-      await axios.post('http://13.235.95.5:3000/logoutinsti');
+      await axios.post('http://shorthandexam.in/logoutinsti');
 
       setIsAuthenticated(false);
       // Redirect to the login page

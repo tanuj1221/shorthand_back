@@ -18,7 +18,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors({
-  origin: ['http://13.235.95.5:3001', '*'],
+  origin: ['http://shorthandexam.in', '*'],
   credentials: true
 }));
 
@@ -165,5 +165,5 @@ app.get('', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on http://13.235.95.5:${PORT}`);
+  console.log(`Server running on http://shorthandexam.in`);
 });

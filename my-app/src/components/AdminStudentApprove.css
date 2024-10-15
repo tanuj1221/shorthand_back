@@ -1,8 +1,8 @@
 .asa-container {
     font-family: Arial, sans-serif;
-    max-width: 1200px;
+    width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 10px;
   }
   
   .asa-title {
@@ -11,12 +11,12 @@
     margin-bottom: 30px;
   }
   
-  .asa-table-container {
+  /* .asa-table-container {
     overflow-x: auto;
-  }
+  } */
   
   .asa-table {
-    width: 100%;
+   width: 100%;
     border-collapse: collapse;
     background-color: #fff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);

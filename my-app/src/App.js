@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import LoginComponent from './components/InstituteLogin';
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import InstituteDashboard from './components/InstituteDashboard';
 import StudentForm from './components/StudentForm'; // Renamed for clarity
@@ -60,25 +60,24 @@ const App = () => {
   return ( 
     <Router>
       <Routes>
-      /*<Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/admin_login" />} />*/
-      
-    <Route path="/refund-policy" element={<Refund />} />
-    <Route path="/contact-us" element={<ContactUs />} />
-    <Route path="/terms" element={<Terms />} />
-    <Route path="/policy" element={<Policy />} />
-      <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <AdminDashboard />} />
-       <Route path="/admin_login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
-       <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />
-        <Route path="/login_institute" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginComponent setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/dashboard" element={isAuthenticated ? <InstituteDashboard setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login_institute" />}>
-          <Route path="students" element={<StudentList />} />
-          <Route path="registration" element={<StudentForm />} />
-          <Route path="paystudents" element={<PayStudentList />} />
-          <Route path="overview" element={<Dashboard/>}></Route>
-          <Route path="refund-policy" element={<Refund />} />
-          <Route path="edit-student/:id" element={<EditStudentForm />} />
-        </Route>  
-      </Routes>
+        <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <Navigate to="/admin_login" />} />*/
+        <Route path="/refund-policy" element={<Refund />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/policy" element={<Policy />} />
+        <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <AdminDashboard />} />
+        <Route path="/admin_login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
+          <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />
+          <Route path="/login_institute" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginComponent setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/dashboard" element={isAuthenticated ? <InstituteDashboard setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login_institute" />}>
+            <Route path="students" element={<StudentList />} />
+            <Route path="registration" element={<StudentForm />} />
+            <Route path="paystudents" element={<PayStudentList />} />
+            <Route path="overview" element={<Dashboard/>}></Route>
+            <Route path="refund-policy" element={<Refund />} />
+            <Route path="edit-student/:id" element={<EditStudentForm />} />
+          </Route>  
+          </Routes>
     </Router>
   );
 };

@@ -6,6 +6,7 @@ import UpdateTable from './UpdateTable';
 import WaitingStudents from './AdminStudentApprove';
 import FileUpload from './FileUpload';
 import './AdminDashboard.css';
+import PaidStudents from './PaidStudents';
 
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState('tables');
@@ -23,6 +24,8 @@ function AdminDashboard() {
         return <UpdateTable />;
       case 'approveStudents':
         return <WaitingStudents />;
+        case 'paidStudents':
+          return <PaidStudents />;
       default:
         return <TablesList />;
     }
@@ -72,6 +75,12 @@ function AdminDashboard() {
           onClick={() => setActiveSection('approveStudents')}
         >
           Approve Students
+        </button>
+        <button
+          className={`admin-dashboard__nav-button ${activeSection === 'paidStudents' ? 'active' : ''}`}
+          onClick={() => setActiveSection('paidStudents')}
+        >
+          Paid Students
         </button>
       </nav>
       <main className="admin-dashboard__content">

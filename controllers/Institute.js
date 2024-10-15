@@ -3,28 +3,42 @@ const connection = require('../config/db1');
 
 exports.loginInstitute = async (req, res) => {
   console.log("Trying institute login");
+  console.log("Request body:", req.body);
+
   const { userId, password } = req.body;
+  console.log("Extracted userId:", userId);
+  console.log("Extracted password:", password);
 
   const query1 = 'SELECT * FROM institutedb WHERE instituteId = ?';
+  console.log("SQL Query:", query1);
 
   try {
-      const [results] = await connection.query(query1, [userId]);
-      if (results.length > 0) {
-          const institute = results[0];
-          console.log(institute);
+    console.log("Attempting database query");
+    const [results] = await connection.query(query1, [userId]);
+    console.log("Query results:", results);
 
-          if (institute.password === password) {
-              // Set institute session
-              req.session.instituteId = institute.instituteId;
-              res.send('Logged in successfully as an institute!');
-          } else {
-              res.status(401).send('Invalid credentials for institute');
-          }
+    if (results.length > 0) {
+      const institute = results[0];
+      console.log("Found institute:", institute);
+
+      if (institute.password === password) {
+        console.log("Password matched");
+        // Set institute session
+        req.session.instituteId = institute.instituteId;
+        console.log("Session set:", req.session);
+        res.send('Logged in successfully as an institute!');
       } else {
-          res.status(404).send('Institute not found');
+        console.log("Password mismatch");
+        res.status(401).send('Invalid credentials for institute');
       }
+    } else {
+      console.log("No institute found with provided userId");
+      res.status(404).send('Institute not found');
+    }
   } catch (err) {
-      res.status(500).send(err.message);
+    console.error("Error in loginInstitute:", err);
+    console.error("Error stack:", err.stack);
+    res.status(500).send(err.message);
   }
 };
 

@@ -90,10 +90,10 @@ function WaitingStudents() {
   };
 
   return (
-    <div className="waiting-students-2024">
-      <h1 className="waiting-students-2024__title">Waiting Students</h1>
-      <div className="waiting-students-2024__table-container">
-        <table className="waiting-students-2024__table">
+    <div className="asa-container">
+      <h1 className="asa-title">Waiting Students</h1>
+      <div className="asa-table-container">
+        <table className="asa-table">
           <thead>
             <tr>
               <th>Select</th>
@@ -105,7 +105,8 @@ function WaitingStudents() {
               <th>Date</th>
               <th>Amount</th>
               <th>Institute ID</th>
-              <th>Actions</th>
+              <th>Approve</th>
+              <th>Reject</th>
             </tr>
           </thead>
           <tbody>
@@ -116,7 +117,7 @@ function WaitingStudents() {
                     type="checkbox"
                     checked={selectedStudents.includes(student.student_id)}
                     onChange={() => handleSelect(student.student_id)}
-                    className="waiting-students-2024__checkbox"
+                    className="asa-checkbox"
                   />
                 </td>
                 <td>{student.student_id}</td>
@@ -127,20 +128,18 @@ function WaitingStudents() {
                 <td>{student.date}</td>
                 <td>{student.amount}</td>
                 <td>{student.instituteId}</td>
-                <td>
-                  <button onClick={() => handleApprove(student.student_id)} className="waiting-students-2024__button waiting-students-2024__button--approve">Approve</button>
-                  <button onClick={() => handleReject(student.student_id)} className="waiting-students-2024__button waiting-students-2024__button--reject">Reject</button>
-                </td>
+                <td><button className="asa-button asa-button-approve" onClick={() => handleApprove(student.student_id)}>Approve</button></td>
+                <td><button className="asa-button asa-button-reject" onClick={() => handleReject(student.student_id)}>Reject</button></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="waiting-students-2024__bulk-actions">
-        <button onClick={handleBulkApprove} disabled={selectedStudents.length === 0} className="waiting-students-2024__button waiting-students-2024__button--bulk waiting-students-2024__button--approve">
+      <div className="asa-bulk-action-buttons">
+        <button className="asa-button asa-button-bulk asa-button-approve" onClick={handleBulkApprove} disabled={selectedStudents.length === 0}>
           Approve Selected
         </button>
-        <button onClick={handleBulkReject} disabled={selectedStudents.length === 0} className="waiting-students-2024__button waiting-students-2024__button--bulk waiting-students-2024__button--reject">
+        <button className="asa-button asa-button-bulk asa-button-reject" onClick={handleBulkReject} disabled={selectedStudents.length === 0}>
           Reject Selected
         </button>
       </div>

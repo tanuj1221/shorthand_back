@@ -9,7 +9,7 @@ const connection = require('./config/db')
 
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://13.235.95.5:${PORT}`);
 });
 
 

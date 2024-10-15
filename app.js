@@ -15,10 +15,10 @@ const auth1 = require('./routes/isauthsti')
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = 3002;
 
 app.use(cors({
-  origin: 'http://13.235.95.5:3001',
+  origin: ['http://13.235.95.5:3001', 'http://13.235.95.5'],
   credentials: true
 }));
 

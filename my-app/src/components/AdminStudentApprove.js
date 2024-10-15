@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import '../admin-loginStudentApprove.css';
+import './AdminStudentApprove.css';
 
 function WaitingStudents() {
   const [students, setStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-  // Fetch students on component mount
   useEffect(() => {
-    fetch('http://localhost:3000/approve') // Ensure this URL matches your actual API endpoint
+    fetch('http://localhost:3000/approve')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);
@@ -18,7 +17,6 @@ function WaitingStudents() {
       .catch(error => console.error('Error fetching students:', error));
   }, []);
 
-  // Function to handle approval
   const handleApprove = (studentId) => {
     console.log('Approving student with ID:', studentId);
   
@@ -30,7 +28,6 @@ function WaitingStudents() {
       body: JSON.stringify({ student_id: studentId })
     };
   
-    // Make the fetch request to the backend
     fetch('http://localhost:3000/approved_student', options)
       .then(response => {
         if (!response.ok) {
@@ -48,7 +45,6 @@ function WaitingStudents() {
       });
   };
 
-  // Function to handle rejection
   const handleReject = (studentId) => {
     console.log('Rejecting student with ID:', studentId);
     
@@ -60,7 +56,6 @@ function WaitingStudents() {
       body: JSON.stringify({ student_id: studentId })
     };
 
-    // Make the fetch request to the backend
     fetch('http://localhost:3000/rejected_student', options)
       .then(response => {
         if (!response.ok) {
@@ -78,7 +73,6 @@ function WaitingStudents() {
       });
   };
 
-  // Handle select/deselect of students
   const handleSelect = (studentId) => {
     setSelectedStudents((prevSelected) =>
       prevSelected.includes(studentId)
@@ -87,64 +81,66 @@ function WaitingStudents() {
     );
   };
 
-  // Handle bulk approval
   const handleBulkApprove = () => {
     selectedStudents.forEach(handleApprove);
   };
 
-  // Handle bulk rejection
   const handleBulkReject = () => {
     selectedStudents.forEach(handleReject);
   };
 
   return (
-    <div>
-      <h1>Waiting Students</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>Student ID</th>
-            <th>Name</th>
-            <th>Mobile</th>
-            <th>Email</th>
-            <th>UTR</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Institute ID</th>
-            <th>Approve</th>
-            <th>Reject</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((student) => (
-            <tr key={student.student_id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedStudents.includes(student.student_id)}
-                  onChange={() => handleSelect(student.student_id)}
-                />
-              </td>
-              <td>{student.student_id}</td>
-              <td>{student.user}</td>
-              <td>{student.mobile}</td>
-              <td>{student.email}</td>
-              <td>{student.utr}</td>
-              <td>{student.date}</td>
-              <td>{student.amount}</td>
-              <td>{student.instituteId}</td>
-              <td><button onClick={() => handleApprove(student.student_id)}>Approve</button></td>
-              <td><button onClick={() => handleReject(student.student_id)}>Reject</button></td>
+    <div className="waiting-students-2024">
+      <h1 className="waiting-students-2024__title">Waiting Students</h1>
+      <div className="waiting-students-2024__table-container">
+        <table className="waiting-students-2024__table">
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Student ID</th>
+              <th>Name</th>
+              <th>Mobile</th>
+              <th>Email</th>
+              <th>UTR</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Institute ID</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="bulk-action-buttons">
-        <button onClick={handleBulkApprove} disabled={selectedStudents.length === 0}>
+          </thead>
+          <tbody>
+            {students.map((student) => (
+              <tr key={student.student_id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedStudents.includes(student.student_id)}
+                    onChange={() => handleSelect(student.student_id)}
+                    className="waiting-students-2024__checkbox"
+                  />
+                </td>
+                <td>{student.student_id}</td>
+                <td>{student.user}</td>
+                <td>{student.mobile}</td>
+                <td>{student.email}</td>
+                <td>{student.utr}</td>
+                <td>{student.date}</td>
+                <td>{student.amount}</td>
+                <td>{student.instituteId}</td>
+                <td>
+                  <button onClick={() => handleApprove(student.student_id)} className="waiting-students-2024__button waiting-students-2024__button--approve">Approve</button>
+                  <button onClick={() => handleReject(student.student_id)} className="waiting-students-2024__button waiting-students-2024__button--reject">Reject</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="waiting-students-2024__bulk-actions">
+        <button onClick={handleBulkApprove} disabled={selectedStudents.length === 0} className="waiting-students-2024__button waiting-students-2024__button--bulk waiting-students-2024__button--approve">
           Approve Selected
         </button>
-        <button onClick={handleBulkReject} disabled={selectedStudents.length === 0}>
+        <button onClick={handleBulkReject} disabled={selectedStudents.length === 0} className="waiting-students-2024__button waiting-students-2024__button--bulk waiting-students-2024__button--reject">
           Reject Selected
         </button>
       </div>

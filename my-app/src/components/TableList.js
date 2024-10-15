@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './TablesList.css';
 
 function TablesList() {
   const [tables, setTables] = useState([]);
@@ -10,9 +11,8 @@ function TablesList() {
     const fetchTables = async () => {
       try {
         const response = await axios.get('http://localhost:3000/tables', {
-          // Make sure to include the appropriate headers or authentication tokens
           headers: {
-            Authorization: 'Bearer your-auth-token' // Adjust based on your authentication method
+            Authorization: 'Bearer your-auth-token'
           }
         });
         setTables(response.data.tables);
@@ -26,15 +26,15 @@ function TablesList() {
     fetchTables();
   }, []);
 
-  if (loading) return <p>Loading tables...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className="tables-list__loading">Loading tables...</p>;
+  if (error) return <p className="tables-list__error">Error: {error}</p>;
 
   return (
-    <div>
-      <h2>Database Tables</h2>
-      <ul>
+    <div className="tables-list">
+      <h2 className="tables-list__title">Database Tables</h2>
+      <ul className="tables-list__list">
         {tables.map((table, index) => (
-          <li key={index}>{table}</li>
+          <li key={index} className="tables-list__item">{table}</li>
         ))}
       </ul>
     </div>

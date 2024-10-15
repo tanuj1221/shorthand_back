@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './DeleteTableForm.css';
 
 const DeleteTableForm = () => {
-    const [tableName, setTableName] = useState(''); // State to hold the input value
-    const [message, setMessage] = useState(''); // State to display messages to the user
+    const [tableName, setTableName] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleDelete = async (event) => {
-        event.preventDefault(); // Prevent form from causing a page reload
+        event.preventDefault();
         if (!tableName) {
             setMessage('Please enter a table name.');
             return;
@@ -14,27 +15,31 @@ const DeleteTableForm = () => {
 
         try {
             const response = await axios.delete(`http://localhost:3000/deletetable/${tableName}`);
-            setMessage(response.data); // Display success message
-            setTableName(''); // Reset table name input
+            setMessage(response.data);
+            setTableName('');
         } catch (error) {
-            setMessage(error.response ? error.response.data : 'Failed to delete table'); // Display error message
+            setMessage(error.response ? error.response.data : 'Failed to delete table');
         }
     };
 
     return (
-        <div>
-            <form onSubmit={handleDelete}>
-                <label htmlFor="tableName">Table Name:</label>
-                <input
-                    type="text"
-                    id="tableName"
-                    value={tableName}
-                    onChange={(e) => setTableName(e.target.value)}
-                    placeholder="Enter table name"
-                />
-                <button type="submit">Delete Table</button>
+        <div className="delete-table-form">
+            <h2 className="delete-table-form__title">Delete Table</h2>
+            <form className="delete-table-form__form" onSubmit={handleDelete}>
+                <div className="delete-table-form__input-group">
+                    <label htmlFor="tableName" className="delete-table-form__label">Table Name:</label>
+                    <input
+                        type="text"
+                        id="tableName"
+                        className="delete-table-form__input"
+                        value={tableName}
+                        onChange={(e) => setTableName(e.target.value)}
+                        placeholder="Enter table name"
+                    />
+                </div>
+                <button type="submit" className="delete-table-form__submit">Delete Table</button>
             </form>
-            {message && <p>{message}</p>} {/* Display messages to the user */}
+            {message && <p className="delete-table-form__message">{message}</p>}
         </div>
     );
 };

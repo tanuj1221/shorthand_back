@@ -69,7 +69,7 @@ function AdminLoginComponent({ setIsAdminAuthenticated  }) {
         </form>
       </div>
       {errorMessage && <div className="error-message" style={{ color: 'red' }}>{errorMessage}</div>}
-      <div className="copyright">&copy; 2023</div>
+      <div className="copyright">&copy; 2024</div>
     </div>
   );
 }

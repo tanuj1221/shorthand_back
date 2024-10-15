@@ -1,0 +1,124 @@
+.update-table {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.update-table__header {
+    margin-bottom: 20px;
+}
+
+.update-table__title {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.update-table__select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.update-table__selected {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+.update-table__container {
+    overflow-x: auto;
+}
+
+.update-table__table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.update-table__table th,
+.update-table__table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.update-table__table th {
+    background-color: #3498db;
+    color: #fff;
+    font-weight: bold;
+}
+
+.update-table__input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.update-table__actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.update-table__button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update-table__button--save {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.update-table__button--save:hover {
+    background-color: #27ae60;
+}
+
+.update-table__button--reset {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.update-table__button--reset:hover {
+    background-color: #c0392b;
+}
+
+.update-table__button--download {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.update-table__button--download:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 768px) {
+    .update-table__actions {
+        flex-direction: column;
+    }
+
+    .update-table__button {
+        width: 100%;
+    }
+
+    .update-table__table th,
+    .update-table__table td {
+        padding: 8px;
+    }
+
+    .update-table__input {
+        font-size: 12px;
+    }
+}

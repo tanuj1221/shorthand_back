@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './FileUpload.css';
 
 function FileUpload() {
   const [file, setFile] = useState(null);
@@ -37,14 +38,33 @@ function FileUpload() {
   };
 
   return (
-    <div>
-      <h2>Upload CSV to Table</h2>
-      <form onSubmit={handleUpload}>
-        <input type="file" onChange={handleFileChange} accept=".csv" />
-        <input type="text" value={tableName} onChange={handleTableNameChange} placeholder="Enter table name" />
-        <button type="submit">Upload</button>
+    <div className="file-upload">
+      <h2 className="file-upload__title">Upload CSV to Table</h2>
+      <form className="file-upload__form" onSubmit={handleUpload}>
+        <div className="file-upload__input-group">
+          <label htmlFor="file-input" className="file-upload__label">Choose CSV File:</label>
+          <input 
+            id="file-input"
+            className="file-upload__file-input" 
+            type="file" 
+            onChange={handleFileChange} 
+            accept=".csv" 
+          />
+        </div>
+        <div className="file-upload__input-group">
+          <label htmlFor="table-name" className="file-upload__label">Table Name:</label>
+          <input 
+            id="table-name"
+            className="file-upload__text-input" 
+            type="text" 
+            value={tableName} 
+            onChange={handleTableNameChange} 
+            placeholder="Enter table name" 
+          />
+        </div>
+        <button className="file-upload__submit" type="submit">Upload</button>
       </form>
-      {uploadStatus && <p>{uploadStatus}</p>}
+      {uploadStatus && <p className="file-upload__status">{uploadStatus}</p>}
     </div>
   );
 }

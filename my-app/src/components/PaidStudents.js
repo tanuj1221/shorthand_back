@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './PaidStudents.css';
+
 
 function PaidStudents() {
   const [students, setStudents] = useState([]);
@@ -81,15 +81,14 @@ function PaidStudents() {
     );
   };
 
-
   return (
     <div className="asa-container">
       <h1 className="asa-title">Paid Students</h1>
+      <p className="asa-total-count">Total Paid Students: {students.length}</p>
       <div className="asa-table-container">
         <table className="asa-table">
           <thead>
             <tr>
-           
               <th>Student ID</th>
               <th>Name</th>
               <th>Mobile</th>
@@ -98,13 +97,11 @@ function PaidStudents() {
               <th>Date</th>
               <th>Amount</th>
               <th>Institute ID</th>
-     
             </tr>
           </thead>
           <tbody>
             {students.map((student) => (
               <tr key={student.student_id}>
-                
                 <td>{student.student_id}</td>
                 <td>{student.user}</td>
                 <td>{student.mobile}</td>
@@ -113,13 +110,11 @@ function PaidStudents() {
                 <td>{student.date}</td>
                 <td>{student.amount}</td>
                 <td>{student.instituteId}</td>
-                
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
     </div>
   );
 }

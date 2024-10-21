@@ -160,8 +160,10 @@ app.use(instituteRoutes)
 app.use(adminView)
 app.use(mockroute)
 app.use(auth1)
-app.get('', (req, res) => {
-  res.sendFile(path.join(__dirname+'/my-app/build/index.html'));
+
+// Add this catch-all route at the end of all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'my-app/build', 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {

@@ -11,7 +11,7 @@ router.get('/tables', isAuthenticatedAdmin,adminView.getAllTables);
 router.get('/table/:tableName', adminView.getTheTable);
 router.post('/save-table/:tableName', adminView.saveTheTable);
 
-router.post('/admin_login',adminView.loginadmin);
+router.post('/admin-login',adminView.loginadmin);
 router.get('/approve', adminView.getAllWaitingStudents);
 router.get("/paid-students",adminView.getAllPaidStudents);
 router.post('/approved_student', adminView.approveStudent);

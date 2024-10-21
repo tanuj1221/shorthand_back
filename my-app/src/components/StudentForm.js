@@ -33,7 +33,7 @@ function StudentForm() {
   // Fetch Batch Years
   useEffect(() => {
     const fetchBatchInfo = async () => {
-      const result = await axios('http://localhost:3000/batch');
+      const result = await axios('http://shorthandexam.in/batch');
       setBatchYears(result.data.map(batch => batch.batch_year));
     };
     fetchBatchInfo();
@@ -43,7 +43,7 @@ function StudentForm() {
     if (studentId) { // Only fetch if studentId is available
       const fetchStudentData = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/students/${studentId}`);
+          const response = await axios.get(`http://shorthandexam.in/students/${studentId}`);
           const studentData = response.data;
           setStudentDetails({
             firstName: studentData.firstName,
@@ -110,7 +110,7 @@ function StudentForm() {
   // Fetch Semesters for a given Batch Year
   useEffect(() => {
     const fetchSemesters = async () => {
-      const result = await axios(`http://localhost:3000/batch?batch_year=${selectedYear}`);
+      const result = await axios(`http://shorthandexam.in/batch?batch_year=${selectedYear}`);
       setSemesters(result.data);
     };
     if (selectedYear) fetchSemesters();
@@ -119,7 +119,7 @@ function StudentForm() {
   // Fetch Subjects
   useEffect(() => {
     const fetchSubjects = async () => {
-      const result = await axios('http://localhost:3000/subjectsAndIds');
+      const result = await axios('http://shorthandexam.in/subjectsAndIds');
       setSubjects(result.data);
     };
     fetchSubjects();
@@ -165,7 +165,7 @@ function StudentForm() {
       };
 
       try {
-        await axios.post('http://localhost:3000/registerstudent', newStudent);
+        await axios.post('http://shorthandexam.in/registerstudent', newStudent);
         console.log(`Student created successfully for subject ${subjectId}!`);
       } catch (error) {
         console.error(`Failed to create student for subject ${subjectId}:`, error);

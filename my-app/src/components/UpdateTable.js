@@ -16,7 +16,7 @@ const UpdateTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/table/${selectedVal}`);
+                const response = await axios.get(`http://shorthandexam.in/table/${selectedVal}`);
                 setData(response.data);
                 setOriginalData(response.data);
             } catch (error) {
@@ -103,7 +103,7 @@ const UpdateTable = () => {
 
     const handleSave = async () => {
         try {
-            await axios.post(`http://localhost:3000/save-table/${selectedVal}`, data);
+            await axios.post(`http://shorthandexam.in/save-table/${selectedVal}`, data);
             console.log('Data saved successfully!');
             alert("Data saved!");
         } catch (error) {

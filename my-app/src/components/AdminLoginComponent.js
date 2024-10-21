@@ -13,7 +13,7 @@ function AdminLoginComponent({ setIsAdminAuthenticated  }) {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/admin-login/', {
+      const response = await axios.post('http://shorthandexam.in/admin-login/', {
         userId: instituteId,
         password: password
       });

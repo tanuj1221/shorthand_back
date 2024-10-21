@@ -10,7 +10,7 @@ function TablesList() {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/tables', {
+        const response = await axios.get('http://shorthandexam.in/tables', {
           headers: {
             Authorization: 'Bearer your-auth-token'
           }

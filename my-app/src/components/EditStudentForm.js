@@ -27,7 +27,7 @@ const EditStudentForm = () => {
 
   useEffect(() => {
     if (studentId) {
-      axios.get(`http://localhost:3000/students/details/${studentId}`)
+      axios.get(`http://shorthandexam.in/students/details/${studentId}`)
         .then(response => {
           const studentData = response.data;
           setStudentDetails(studentData);
@@ -45,7 +45,7 @@ const EditStudentForm = () => {
 
   useEffect(() => {
     const fetchBatchInfo = async () => {
-      const result = await axios('http://localhost:3000/batch');
+      const result = await axios('http://shorthandexam.in/batch');
       setBatchYears(result.data.map(batch => batch.batch_year));
     };
     fetchBatchInfo();
@@ -55,7 +55,7 @@ const EditStudentForm = () => {
     if (selectedYear) {
       const fetchSemesters = async () => {
         try {
-          const result = await axios(`http://localhost:3000/batch?batch_year=${selectedYear}`);
+          const result = await axios(`http://shorthandexam.in/batch?batch_year=${selectedYear}`);
           setSemesters(result.data);
         } catch (error) {
           console.error('Error fetching semesters:', error);
@@ -99,7 +99,7 @@ const EditStudentForm = () => {
     };
   
     try {
-      const response = await axios.put(`http://localhost:3000/students/${studentId}`, updatedStudentDetails);
+      const response = await axios.put(`http://shorthandexam.in/students/${studentId}`, updatedStudentDetails);
       alert('Student updated successfully!');
       console.log(response.data);
     } catch (error) {

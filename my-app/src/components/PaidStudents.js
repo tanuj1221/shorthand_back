@@ -6,7 +6,7 @@ function PaidStudents() {
   const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/paid-students')
+    fetch('http://shorthandexam.in/paid-students')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);
@@ -28,7 +28,7 @@ function PaidStudents() {
       body: JSON.stringify({ student_id: studentId })
     };
   
-    fetch('http://localhost:3000/approved_student', options)
+    fetch('http://shorthandexam.in/approved_student', options)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);
@@ -56,7 +56,7 @@ function PaidStudents() {
       body: JSON.stringify({ student_id: studentId })
     };
 
-    fetch('http://localhost:3000/rejected_student', options)
+    fetch('http://shorthandexam.in/rejected_student', options)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP status ${response.status}`);

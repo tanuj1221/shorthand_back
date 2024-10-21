@@ -13,7 +13,7 @@ const DeleteTableForm = () => {
         }
 
         try {
-            const response = await axios.delete(`http://shorthandexam.in/deletetable/${tableName}`);
+            const response = await axios.delete(`http://localhost:3000/deletetable/${tableName}`);
             setMessage(response.data); // Display success message
             setTableName(''); // Reset table name input
         } catch (error) {

@@ -18,7 +18,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors({
-  origin: ['http://shorthandexam.in', '*'],
+  origin: ['http://localhost:3000', '*'],
   credentials: true
 }));
 
@@ -165,5 +165,5 @@ app.get('', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on http://shorthandexam.in`);
+  console.log(`Server running on http://localhost:3000`);
 });

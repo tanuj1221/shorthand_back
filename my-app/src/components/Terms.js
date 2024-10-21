@@ -13,7 +13,7 @@ function Terms() {
 We are THE AARAL PUBLICATIONS, doing business as SHORTHAND DEMO ("Firm," "we," "us," "our"), a Firm registered in India at C/o Aaral Publications, Majiwada, Thane - W
 
 
-We operate the website SHORTHAND DEMO http://shorthandexam.in/#/login_institute (the "Site"), as well as any other related products and services that refer or link to these legal terms (the "Legal Terms") (collectively, the "Services").
+We operate the website SHORTHAND DEMO http://localhost:3000/#/login_institute (the "Site"), as well as any other related products and services that refer or link to these legal terms (the "Legal Terms") (collectively, the "Services").
  
 
 You can contact us by phone at 9869380948, email at Aaral.publications@gmail.com, or by mail to C/O Aaral Publications, Majiwada, Thane - W
@@ -130,7 +130,7 @@ You agree to provide current, complete, and accurate purchase and account inform
 <p>
 Billing and Renewal
 
- Renew your Membership by visiting our website SHORTHAND DEMO http://shorthandexam.in/#/login_institute, then click on Pay Fees. 
+ Renew your Membership by visiting our website SHORTHAND DEMO http://localhost:3000/#/login_institute, then click on Pay Fees. 
  
 Cancellation
  You can cancel your subscription at any time by contacting us using the contact information provided below. Your cancellation will take effect at the end of the current paid term. If you have any questions or are unsatisfied with our Services, please email us at Aaral.publications@gmail.com.

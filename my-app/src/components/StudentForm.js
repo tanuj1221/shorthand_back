@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import CropperModal from './CropperModal'; // Import the CropperModal component
 
 function StudentForm() {
   // State hooks for various component states
@@ -25,7 +26,10 @@ function StudentForm() {
     email: '',
   });
 
-  
+  // New state for CropperModal
+  const [isCropperOpen, setIsCropperOpen] = useState(false);
+  const [cropperSrc, setCropperSrc] = useState(null);
+
   // Fetch Batch Years
   useEffect(() => {
     const fetchBatchInfo = async () => {
@@ -102,7 +106,6 @@ function StudentForm() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   //End Applying media queries===========
-
 
   // Fetch Semesters for a given Batch Year
   useEffect(() => {
@@ -191,18 +194,21 @@ function StudentForm() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file && file.size <= 60 * 1024) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const imageBytes = new Uint8Array(event.target.result);
-        const imageText = btoa(String.fromCharCode.apply(null, imageBytes));
-        setStudentDetails({ ...studentDetails, image: imageText });
-        setImagePreview(URL.createObjectURL(file));
-      };
-      reader.readAsArrayBuffer(file);
-    } else {
-      alert('Please select an image under 60KB.');
+    if (file) {
+      setCropperSrc(URL.createObjectURL(file));
+      setIsCropperOpen(true);
     }
+  };
+
+  const handleCrop = (blob) => {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const imageBytes = new Uint8Array(event.target.result);
+      const imageText = btoa(String.fromCharCode.apply(null, imageBytes));
+      setStudentDetails({ ...studentDetails, image: imageText });
+      setImagePreview(URL.createObjectURL(blob));
+    };
+    reader.readAsArrayBuffer(blob);
   };
 
   const handleChange = (e) => {
@@ -361,8 +367,6 @@ function StudentForm() {
     marginBottom: '10px',
   };
 
-
-
   return (
     <div>
       <h1 style={headingStyle}>Register New Student</h1>
@@ -473,6 +477,12 @@ function StudentForm() {
 
         <button type="submit" style={buttonStyle}>Submit</button>
       </form>
+      <CropperModal
+        isOpen={isCropperOpen}
+        onClose={() => setIsCropperOpen(false)}
+        src={cropperSrc}
+        onCrop={handleCrop}
+      />
     </div>
   );
 }

@@ -66,7 +66,7 @@ const App = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <AdminDashboard />} />
-        <Route path="/admin_login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
+        <Route path="/admin-login" element={isAdminAuthenticated ? <Navigate to="/admin" /> : <AdminLoginComponent setIsAdminAuthenticated={setIsAdminAuthenticated} />} />
           <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login_institute" />} />
           <Route path="/login_institute" element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginComponent setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/dashboard" element={isAuthenticated ? <InstituteDashboard setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login_institute" />}>

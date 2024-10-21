@@ -1,0 +1,89 @@
+.delete-table-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.delete-table-form__title {
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.delete-table-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.delete-table-form__input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.delete-table-form__label {
+    font-size: 16px;
+    color: #34495e;
+}
+
+.delete-table-form__input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.delete-table-form__input:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+.delete-table-form__submit {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-table-form__submit:hover {
+    background-color: #c0392b;
+}
+
+.delete-table-form__message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+@media (max-width: 600px) {
+    .delete-table-form {
+        padding: 20px;
+    }
+
+    .delete-table-form__title {
+        font-size: 20px;
+    }
+
+    .delete-table-form__label,
+    .delete-table-form__input,
+    .delete-table-form__submit,
+    .delete-table-form__message {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,130 @@
+.asa-container {
+    font-family: Arial, sans-serif;
+    width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+  
+  .asa-title {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* .asa-table-container {
+    overflow-x: auto;
+  } */
+  
+  .asa-table {
+   width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .asa-table th,
+  .asa-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .asa-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .asa-table tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .asa-checkbox {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .asa-button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .asa-button-approve {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .asa-button-approve:hover {
+    background-color: #45a049;
+  }
+  
+  .asa-button-reject {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .asa-button-reject:hover {
+    background-color: #da190b;
+  }
+  
+  .asa-bulk-action-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .asa-button-bulk {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
+  .asa-button-bulk:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .asa-table {
+      font-size: 14px;
+    }
+  
+    .asa-table th,
+    .asa-table td {
+      padding: 8px;
+    }
+  
+    .asa-button {
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+  
+    .asa-bulk-action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .asa-button-bulk {
+      width: 100%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .asa-table {
+      font-size: 12px;
+    }
+  
+    .asa-table th,
+    .asa-table td {
+      padding: 6px;
+    }
+  
+    .asa-button {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+  }

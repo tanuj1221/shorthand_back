@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import '../App.css'
+import './UpdateTable.css';
 import * as XLSX from 'xlsx';
+
 const UpdateTable = () => {
     const [data, setData] = useState([]);
     const [selectedVal, setSelectedVal] = useState('');
@@ -35,36 +36,28 @@ const UpdateTable = () => {
             <th key={key}>{key.toUpperCase()}</th>
         ));
     };
+
     const downloadExcel = () => {
-        // Ensure there is data to export
         if (data.length === 0) {
             alert("No data to download!");
             return;
         }
     
-        // Get the header row
         const headers = Object.keys(data[0]);
+        let csvContent = headers.join(",") + "\n";
     
-        // Create the CSV content
-        let csvContent = headers.join(",") + "\n"; // Add the header row
-    
-        // Add the data rows
         data.forEach((row) => {
             const rowValues = headers.map((header) => {
                 let value = row[header] || "";
-                value = value.toString().replace(/,/g, ""); // Escape commas within values
+                value = value.toString().replace(/,/g, "");
                 return value;
             });
             csvContent += rowValues.join(",") + "\n";
         });
     
-        // Create a blob with the CSV content
         const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    
-        // Define a file name
         const fileName = `${selectedVal}_data.csv`;
     
-        // Create a temporary link and click it to initiate the download
         const link = document.createElement("a");
         if (link.download !== undefined) {
             const url = URL.createObjectURL(blob);
@@ -76,6 +69,7 @@ const UpdateTable = () => {
             document.body.removeChild(link);
         }
     };
+
     const renderTableRows = () => {
         return data.map((row, index) => (
             <tr key={index}>
@@ -85,6 +79,7 @@ const UpdateTable = () => {
                             type="text"
                             value={row[key]}
                             onChange={(e) => handleChange(e.target.value, index, key)}
+                            className="update-table__input"
                         />
                     </td>
                 ))}
@@ -108,11 +103,8 @@ const UpdateTable = () => {
 
     const handleSave = async () => {
         try {
-            // Make a POST request to save the updated data to the database
-            console.log("data: "+data);
             await axios.post(`http://localhost:3000/save-table/${selectedVal}`, data);
-
-            console.log('Data saved successfullyy!');
+            console.log('Data saved successfully!');
             alert("Data saved!");
         } catch (error) {
             console.error('Failed to save data:', error);
@@ -120,25 +112,24 @@ const UpdateTable = () => {
     };
 
     return (
-        <div>
-            <div>
-                <h2>Update table</h2>
-                <select value={selectedVal} onChange={handleSelectChange}>
+        <div className="update-table">
+            <div className="update-table__header">
+                <h2 className="update-table__title">Update Table</h2>
+                <select className="update-table__select" value={selectedVal} onChange={handleSelectChange}>
                     <option value="">Select a table</option>
-                    <option value="student14">student</option>
-                    <option value="admindb">admin</option>
-                    <option value="coursesdb1">coursedb</option>
-                    <option value="institutedb">institutedb</option>
-                    <option value="subjectdb">subjectdb</option>
-                    <option value="audiodb1">audio db</option>
-                    <option value="savedata">saved db</option>
-                    <option value="qrpay">qrpay</option>
-                    
+                    <option value="student14">Student</option>
+                    <option value="admindb">Admin</option>
+                    <option value="coursesdb1">Course DB</option>
+                    <option value="institutedb">Institute DB</option>
+                    <option value="subjectdb">Subject DB</option>
+                    <option value="audiodb1">Audio DB</option>
+                    <option value="savedata">Saved DB</option>
+                    <option value="qrpay">QR Pay</option>
                 </select>
-                {selectedVal && <p>Selected: {selectedVal}</p>}
+                {selectedVal && <p className="update-table__selected">Selected: {selectedVal}</p>}
             </div>
-            <div className="table-container">
-                <table className="custom-table">
+            <div className="update-table__container">
+                <table className="update-table__table">
                     <thead>
                         <tr>{renderTableHeader()}</tr>
                     </thead>
@@ -147,10 +138,10 @@ const UpdateTable = () => {
                     </tbody>
                 </table>
             </div>
-            <div>
-                <button onClick={handleSave}>Save</button>
-                <button onClick={handleReset}>Reset</button>
-                <button onClick={downloadExcel}>Download Excel</button>
+            <div className="update-table__actions">
+                <button className="update-table__button update-table__button--save" onClick={handleSave}>Save</button>
+                <button className="update-table__button update-table__button--reset" onClick={handleReset}>Reset</button>
+                <button className="update-table__button update-table__button--download" onClick={downloadExcel}>Download Excel</button>
             </div>
         </div>
     );

@@ -13,6 +13,7 @@ router.post('/save-table/:tableName', adminView.saveTheTable);
 
 router.post('/admin_login',adminView.loginadmin);
 router.get('/approve', adminView.getAllWaitingStudents);
+router.get("/paid-students",adminView.getAllPaidStudents);
 router.post('/approved_student', adminView.approveStudent);
 router.post('/rejected_student', adminView.rejectStudent);
 

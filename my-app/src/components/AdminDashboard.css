@@ -1,0 +1,114 @@
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f5f7fa;
+    --text-color: #333;
+    --accent-color: #e74c3c;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-dashboard {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    min-height: 100vh;
+  }
+  
+  .admin-dashboard__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .admin-dashboard__title {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin: 0;
+  }
+  
+  .admin-dashboard__logout-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .admin-dashboard__logout-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .admin-dashboard__nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .admin-dashboard__nav-button {
+    padding: 12px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .admin-dashboard__nav-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+  }
+  
+  .admin-dashboard__nav-button.active {
+    background-color: #2c3e50;
+    box-shadow: var(--box-shadow);
+  }
+  
+  .admin-dashboard__content {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+  }
+  
+  @media (max-width: 768px) {
+    .admin-dashboard__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .admin-dashboard__logout-btn {
+      margin-top: 10px;
+    }
+  
+    .admin-dashboard__nav {
+      flex-direction: column;
+    }
+  
+    .admin-dashboard__nav-button {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .admin-dashboard {
+      padding: 10px;
+    }
+  
+    .admin-dashboard__title {
+      font-size: 2rem;
+    }
+  
+    .admin-dashboard__content {
+      padding: 20px;
+    }
+  }

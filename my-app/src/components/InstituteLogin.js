@@ -20,8 +20,8 @@ function InstituteLogin({ setIsAuthenticated }) {
       if (response.status === 200) {
         console.log('Logged in successfully:', response.data);
         // Save the instituteName and instituteId to localStorage
-        localStorage.setItem('instituteName', response.data.instituteName);
-        localStorage.setItem('instituteId', response.data.instituteId); // Assuming the ID is returned as instituteId
+        // localStorage.setItem('instituteName', response.data.instituteName);
+        // localStorage.setItem('instituteId', response.data.instituteId); // Assuming the ID is returned as instituteId
         
         setErrorMessage('');
         setIsAuthenticated(true);
